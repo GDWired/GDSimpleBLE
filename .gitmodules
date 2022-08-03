@@ -1,0 +1,6 @@
+[submodule "godot-cpp"]
+	path = godot-cpp
+	url = ./godot-cpp
+[submodule "SimpleBLE"]
+	path = SimpleBLE
+	url = ./SimpleBLE

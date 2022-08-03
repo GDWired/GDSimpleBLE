@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://dmx2xuigcpvt4"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_c326s"]
+
+[node name="Node" type="Node"]
+script = ExtResource("1_c326s")
+
+[node name="Button" type="Button" parent="."]
+offset_left = 392.0
+offset_top = 228.0
+offset_right = 778.0
+offset_bottom = 379.0
+text = "Click me!"
+
+[node name="GDSimpleBLE" type="GDSimpleBLE" parent="."]
+
+[connection signal="pressed" from="Button" to="." method="_on_button_pressed"]
