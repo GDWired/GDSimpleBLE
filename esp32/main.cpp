@@ -74,7 +74,7 @@ void setup() {
 	Serial.begin(115200);
 
 	// Create the BLE Device
-	BLEDevice::init("GDNativeBLE");
+	BLEDevice::init("GDSimpleBLE");
 
 	// Create the BLE Server
 	server = BLEDevice::createServer();
