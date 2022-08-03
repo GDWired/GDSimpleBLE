@@ -18,7 +18,6 @@ logs/*
 *.dblite
 *.pdb
 *.lib
-bin
 *.config
 *.creator
 *.creator.user
@@ -184,7 +183,6 @@ compile_commands.json
 
 # Generated directories with binaries
 build
-bin
 
 # Godot 4+ specific ignores
 */.godot/*
