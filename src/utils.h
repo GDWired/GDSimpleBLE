@@ -35,6 +35,10 @@ class BLEUtils : public Object {
 		UNKNOWN
 	};
 
+	// Private attributs
+	private:
+		static std::vector<std::string>* s_company_identifiers;
+
 	// Protected methods
 	protected:
 
@@ -85,4 +89,11 @@ class BLEUtils : public Object {
 		 * @return string code
 		 */
 		static String get_code_string(const int p_code);
+
+		/**
+		 * Get company name string form the decimal
+		 * @param p_decimal_code decimal code
+		 * @return company name
+		 */
+		static String get_company_name(const int p_code);
 };

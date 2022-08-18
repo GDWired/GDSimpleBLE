@@ -1,8 +1,12 @@
 #include "utils.h"
+#include "company_identfiers.h"
+
+std::vector<std::string>* BLEUtils::s_company_identifiers = &_company_identifiers;
 
 void BLEUtils::_bind_methods() {
 	// Static
 	ClassDB::bind_static_method("BLEUtils", D_METHOD("get_code_string", "code"), &BLEUtils::get_code_string);
+	ClassDB::bind_static_method("BLEUtils", D_METHOD("get_company_name", "code"), &BLEUtils::get_company_name);
 
 	// Bind constants
 	ClassDB::bind_integer_constant(get_class_static(), "", "NOT_INITIALIZED", BLEUtils::Status::NOT_INITIALIZED);
@@ -123,5 +127,13 @@ String BLEUtils::get_code_string(const int p_code) {
 			return "Already disconected";
 		default:
 			return "Unknown";
+	}
+}
+
+String BLEUtils::get_company_name(const int p_code) {
+	try {
+		return String(s_company_identifiers->at(p_code).c_str());
+	} catch (...) {
+		return "UNKNOWN";
 	}
 }

@@ -124,6 +124,7 @@ bool BLEAdapter::init(const String p_address) {
 
 								} else if (!l_peripheral->second->get_is_connected()) {
 									l_peripheral->second->set_is_connected(true);
+									l_peripheral->second->update();
 									emit_signal("peripheral_connected", l_peripheral->second);
 
 								} else {

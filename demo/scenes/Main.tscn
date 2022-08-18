@@ -76,23 +76,31 @@ alignment = 1
 
 [node name="Scan" type="Button" parent="Controls/ConnectScan"]
 custom_minimum_size = Vector2(200, 0)
-offset_right = 373.0
+offset_right = 247.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Scan"
 
 [node name="Connect" type="Button" parent="Controls/ConnectScan"]
 custom_minimum_size = Vector2(200, 0)
-offset_left = 377.0
-offset_right = 750.0
+offset_left = 251.0
+offset_right = 498.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Connect"
 
+[node name="Infos" type="Button" parent="Controls/ConnectScan"]
+offset_left = 502.0
+offset_right = 749.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+disabled = true
+text = "Infos"
+
 [node name="Options" type="HBoxContainer" parent="Controls/ConnectScan"]
 custom_minimum_size = Vector2(250, 0)
-offset_left = 754.0
-offset_right = 1004.0
+offset_left = 753.0
+offset_right = 1003.0
 offset_bottom = 31.0
 alignment = 1
 
@@ -181,8 +189,7 @@ placeholder_text = "Data to send"
 
 [connection signal="pressed" from="Controls/ConnectScan/Scan" to="." method="_on_scan_pressed"]
 [connection signal="pressed" from="Controls/ConnectScan/Connect" to="." method="_on_connect_pressed"]
-[connection signal="toggled" from="Controls/ConnectScan/Options/Update" to="." method="_on_updates_toggled"]
-[connection signal="toggled" from="Controls/ConnectScan/Options/Advance" to="." method="_on_advance_toggled"]
+[connection signal="pressed" from="Controls/ConnectScan/Infos" to="." method="_on_infos_pressed"]
 [connection signal="toggled" from="Controls/Interactions/Notify" to="." method="_on_notify_toggled"]
 [connection signal="pressed" from="Controls/Interactions/Read" to="." method="_on_read_pressed"]
 [connection signal="pressed" from="Controls/Interactions/Send" to="." method="_on_send_pressed"]

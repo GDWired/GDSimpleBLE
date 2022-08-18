@@ -1,5 +1,5 @@
 /*
-	The service GDNativeBLE is accessible at this address: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
+	The service GDSimpleBLE is accessible at this address: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
 	This service has 3 characteristics:
 		- 1 RX in WRITE mode: 6E400002-B5A3-F393-E0A9-E50E24DCCA9E
 		- 2 TX in NOTIFY mode: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E
@@ -10,7 +10,7 @@
 	If you read the data on the last one, you will get the rxValueCount value.
 */
 
-#include <Arduino.h> // If you are in ArduinoIDE remove it
+#include <Arduino.h> // If you are in ArduinoIDE remove it (not tested)
 #include <BLEDevice.h>
 #include <BLE2902.h>
 
@@ -63,7 +63,7 @@ class CharacteristicCallbacks: public BLECharacteristicCallbacks {
 		rxValueCount++;
 
 		// Set new value in the READ characteristic
-		String message = "Data received count: " + String(rxValueCount);
+		String message = "Data received count (" + String(rxValueCount) + ')';
 		txCharacteristicReadOnly->setValue(message.c_str());
 	}
 };
@@ -74,10 +74,10 @@ void setup() {
 	Serial.begin(115200);
 
 	// Create the BLE Device
-	BLEAdapter::init("BLEAdapter");
+	BLEDevice::init("GDSimpleBLE");
 
 	// Create the BLE Server
-	server = BLEAdapter::createServer();
+	server = BLEDevice::createServer();
 	server->setCallbacks(new ServerCallbacks());
 
 	// Create the BLE Service
@@ -90,6 +90,8 @@ void setup() {
 	// Create a BLE Characteristic (READ)
 	txCharacteristicReadOnly = service->createCharacteristic(CHARACTERISTIC_READ_ONLY_UUID_TX, BLECharacteristic::PROPERTY_READ);
 	txCharacteristicReadOnly->addDescriptor(new BLE2902());
+	String message = "Data received count (" + String(rxValueCount) + ')';
+	txCharacteristicReadOnly->setValue(message.c_str());
 
 	// Create a BLE Characteristic (WRITE)
 	rxCharacteristic = service->createCharacteristic( CHARACTERISTIC_UUID_RX, BLECharacteristic::PROPERTY_WRITE);
