@@ -74,10 +74,10 @@ void setup() {
 	Serial.begin(115200);
 
 	// Create the BLE Device
-	BLEDevice::init("GDSimpleBLE");
+	BLEAdapter::init("BLEAdapter");
 
 	// Create the BLE Server
-	server = BLEDevice::createServer();
+	server = BLEAdapter::createServer();
 	server->setCallbacks(new ServerCallbacks());
 
 	// Create the BLE Service

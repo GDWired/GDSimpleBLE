@@ -1,0 +1,8 @@
+[configuration]
+
+entry_symbol = "gdsimpleble_library_init"
+
+[libraries]
+
+macos.debug = "bin/libgodotsimpleble.macos.debug.framework"
+macos.release = "bin/libgodotsimpleble.macos.release.framework"

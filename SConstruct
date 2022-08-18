@@ -21,21 +21,28 @@ env = SConscript("godot-cpp/SConstruct")
 # Sources
 env.Append(CPPPATH=["src/"])
 
-# SimpleBLE make
-sys_exec(["mkdir", "SimpleBLE/build"])
-sys_exec(["cmake", "-BSimpleBLE/build", "-SSimpleBLE"])
-sys_exec(["make", "-C", "SimpleBLE/build"])
-
 # SimpleBLE macOS path
 env.Append(CPPPATH=["SimpleBLE/include"])
-env.Append(LIBPATH=[env.Dir("SimpleBLE/build/bin")])
 env.Append(LIBS=["libsimpleble.a"])
+
+# SimpleBLE make
+if env["target"] == "debug":
+	sys_exec(["mkdir", "SimpleBLE/debug"])
+	sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Debug", "-BSimpleBLE/debug", "-SSimpleBLE"])
+	sys_exec(["make", "-C", "SimpleBLE/debug"])
+	env.Append(LIBPATH=[env.Dir("SimpleBLE/debug/bin")])
+
+else:
+	sys_exec(["mkdir", "SimpleBLE/release"])
+	sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=release", "-BSimpleBLE/release", "-SSimpleBLE"])
+	sys_exec(["make", "-C", "SimpleBLE/release"])
+	env.Append(LIBPATH=[env.Dir("SimpleBLE/release/bin")])
 
 sources = Glob("src/*.cpp")
 
 if env["platform"] == "macos":
 	library = env.SharedLibrary(
-		"demo/bin/libgodotsimpleble.{}.{}.framework/libgodotsimpleble.{}.{}".format(
+		"demo/addons/simple_ble/bin/libgodotsimpleble.{}.{}.framework/libgodotsimpleble.{}.{}".format(
 			env["platform"], env["target"], env["platform"], env["target"]
 		),
 		source=sources,

@@ -1,0 +1,198 @@
+[gd_scene load_steps=5 format=3 uid="uid://dv1gj3xbcjowp"]
+
+[ext_resource type="Script" path="res://scripts/Main.gd" id="1_7vlih"]
+[ext_resource type="Script" path="res://scripts/Terminal.gd" id="2_l6rec"]
+
+[sub_resource type="Theme" id="5"]
+Button/styles/disabled = null
+Button/styles/focus = null
+TextEdit/fonts/font = null
+
+[sub_resource type="Theme" id="6"]
+
+[node name="Main" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = 1.0
+offset_bottom = -107.0
+theme = SubResource("5")
+script = ExtResource("1_7vlih")
+
+[node name="TerminalBackground" type="Panel" parent="."]
+show_behind_parent = true
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -10.0
+
+[node name="Terminal" type="RichTextLabel" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 11.0
+offset_right = -10.0
+offset_bottom = -19.0
+grow_horizontal = 2
+grow_vertical = 2
+focus_mode = 2
+theme = SubResource("6")
+bbcode_enabled = true
+text = "[color=#00FF00]Welcome to the demo project of GDSimpleBLE!
+
+Use the scan button to see the BLE devices and select the index using the spinning box and click on connect
+It is not possible to get the services and characteristics of a server, that's why the two line edits should be filled in manually
+Index 0 will attempt a connection using the default server address of the ESP32 node
+The first one (on the left) for the service, and the second one (on the right) for the characteristic
+If you are using the source in the folder esp32, the service GDNativeBLE is accessible at this address: 6E400001-B5A3-F393-E0A9-E50E24DCCA9E
+This service has 3 characteristics:
+		- 1 RX in WRITE mode: 6E400002-B5A3-F393-E0A9-E50E24DCCA9E
+		- 2 TX in NOTIFY mode: 6E400003-B5A3-F393-E0A9-E50E24DCCA9E
+		- 3 TX in READ mode: 6E400004-B5A3-F393-E0A9-E50E24DCCA9E
+If you send data to the first one, the rxValueCount value will be incremented, and your data will be sent to the serial @115200 baud
+If you subscribe to the second one, every second the value txValue will be incremented and sent
+If you read the data on the last one, you will get the rxValueCount value
+[/color]
+"
+scroll_following = true
+selection_enabled = true
+script = ExtResource("2_l6rec")
+metadata/_edit_layout_mode = 1
+
+[node name="Controls" type="VBoxContainer" parent="."]
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = -2.0
+offset_right = -10.0
+offset_bottom = 99.0
+grow_horizontal = 2
+grow_vertical = 0
+metadata/_edit_layout_mode = 1
+
+[node name="ConnectScan" type="HBoxContainer" parent="Controls"]
+offset_right = 1004.0
+offset_bottom = 31.0
+alignment = 1
+
+[node name="Connect" type="Button" parent="Controls/ConnectScan"]
+custom_minimum_size = Vector2(200, 0)
+offset_right = 373.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+text = "Connect"
+
+[node name="Scan" type="Button" parent="Controls/ConnectScan"]
+custom_minimum_size = Vector2(200, 0)
+offset_left = 377.0
+offset_right = 750.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+text = "Scan"
+
+[node name="Options" type="HBoxContainer" parent="Controls/ConnectScan"]
+custom_minimum_size = Vector2(250, 0)
+offset_left = 754.0
+offset_right = 1004.0
+offset_bottom = 31.0
+alignment = 1
+
+[node name="Update" type="CheckButton" parent="Controls/ConnectScan/Options"]
+custom_minimum_size = Vector2(100, 0)
+offset_right = 123.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+text = "Update"
+
+[node name="Advance" type="CheckButton" parent="Controls/ConnectScan/Options"]
+custom_minimum_size = Vector2(100, 0)
+offset_left = 127.0
+offset_right = 250.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+text = "Advance"
+
+[node name="Connection" type="HBoxContainer" parent="Controls"]
+offset_top = 35.0
+offset_right = 1004.0
+offset_bottom = 66.0
+alignment = 1
+
+[node name="Peripheral" type="LineEdit" parent="Controls/Connection"]
+offset_right = 332.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+text = "823A7171-DD98-45E8-C0CD-5D272E51A0AE"
+placeholder_text = "Peripheral"
+
+[node name="Service" type="LineEdit" parent="Controls/Connection"]
+offset_left = 336.0
+offset_right = 668.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+text = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
+placeholder_text = "Service"
+
+[node name="Characteristic" type="LineEdit" parent="Controls/Connection"]
+offset_left = 672.0
+offset_right = 1004.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+text = "6E400004-B5A3-F393-E0A9-E50E24DCCA9E"
+placeholder_text = "Characteristic"
+
+[node name="Interactions" type="HBoxContainer" parent="Controls"]
+offset_top = 70.0
+offset_right = 1004.0
+offset_bottom = 101.0
+alignment = 1
+
+[node name="Notify" type="Button" parent="Controls/Interactions"]
+offset_right = 248.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+disabled = true
+toggle_mode = true
+text = "Notify"
+
+[node name="Read" type="Button" parent="Controls/Interactions"]
+offset_left = 252.0
+offset_right = 500.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+disabled = true
+text = "Read"
+
+[node name="Send" type="Button" parent="Controls/Interactions"]
+offset_left = 504.0
+offset_right = 752.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+disabled = true
+text = "Send"
+
+[node name="Data" type="LineEdit" parent="Controls/Interactions"]
+offset_left = 756.0
+offset_right = 1004.0
+offset_bottom = 31.0
+size_flags_horizontal = 3
+placeholder_text = "Data to send"
+
+[node name="BLEAdapter" type="BLEAdapter" parent="."]
+
+[connection signal="pressed" from="Controls/ConnectScan/Connect" to="." method="_on_connect_pressed"]
+[connection signal="pressed" from="Controls/ConnectScan/Scan" to="." method="_on_scan_pressed"]
+[connection signal="toggled" from="Controls/ConnectScan/Options/Update" to="." method="_on_updates_toggled"]
+[connection signal="toggled" from="Controls/ConnectScan/Options/Advance" to="." method="_on_advance_toggled"]
+[connection signal="toggled" from="Controls/Interactions/Notify" to="." method="_on_notify_toggled"]
+[connection signal="pressed" from="Controls/Interactions/Read" to="." method="_on_read_pressed"]
+[connection signal="pressed" from="Controls/Interactions/Send" to="." method="_on_send_pressed"]
+[connection signal="adapter_error_status_updated" from="BLEAdapter" to="." method="_on_ble_adapter_adapter_error_status_updated"]
+[connection signal="peripheral_connected" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_connected"]
+[connection signal="peripheral_disconnected" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_disconnected"]
+[connection signal="peripheral_error_status_updated" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_error_status_updated"]
+[connection signal="peripheral_found" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_found"]
+[connection signal="peripheral_indicated" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_indicated"]
+[connection signal="peripheral_notified" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_notified"]
+[connection signal="peripheral_updated" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_updated"]
+[connection signal="scan_started" from="BLEAdapter" to="." method="_on_ble_adapter_scan_started"]
+[connection signal="scan_stopped" from="BLEAdapter" to="." method="_on_ble_adapter_scan_stopped"]

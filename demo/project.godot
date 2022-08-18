@@ -8,12 +8,47 @@
 
 config_version=5
 
+_global_script_classes=[{
+"base": "Node",
+"class": &"Peripheral",
+"language": &"GDScript",
+"path": "res://scripts/Peripheral.gd"
+}, {
+"base": "RichTextLabel",
+"class": &"Terminal",
+"language": &"GDScript",
+"path": "res://scripts/Terminal.gd"
+}]
+_global_script_class_icons={
+"Peripheral": "",
+"Terminal": ""
+}
+
 [application]
 
-config/name="GDExtension Test Project"
-run/main_scene="res://main.tscn"
+config/name="GDSimpleBLE Demo"
+run/main_scene="res://scenes/Main.tscn"
 config/features=PackedStringArray("4.0")
 config/icon="res://icon.png"
+
+[debug]
+
+gdscript/warnings/treat_warnings_as_errors=true
+gdscript/warnings/unsafe_property_access=1
+gdscript/warnings/unsafe_method_access=1
+gdscript/warnings/unsafe_cast=1
+gdscript/warnings/unsafe_call_argument=1
+
+[display]
+
+window/size/viewport_height=720
+window/size/resizable=false
+window/dpi/allow_hidpi=false
+window/energy_saving/keep_screen_on=false
+
+[filesystem]
+
+import/fbx/enabled=false
 
 [native_extensions]
 
