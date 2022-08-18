@@ -74,20 +74,20 @@ offset_right = 1004.0
 offset_bottom = 31.0
 alignment = 1
 
-[node name="Connect" type="Button" parent="Controls/ConnectScan"]
+[node name="Scan" type="Button" parent="Controls/ConnectScan"]
 custom_minimum_size = Vector2(200, 0)
 offset_right = 373.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
-text = "Connect"
+text = "Scan"
 
-[node name="Scan" type="Button" parent="Controls/ConnectScan"]
+[node name="Connect" type="Button" parent="Controls/ConnectScan"]
 custom_minimum_size = Vector2(200, 0)
 offset_left = 377.0
 offset_right = 750.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
-text = "Scan"
+text = "Connect"
 
 [node name="Options" type="HBoxContainer" parent="Controls/ConnectScan"]
 custom_minimum_size = Vector2(250, 0)
@@ -179,8 +179,8 @@ placeholder_text = "Data to send"
 
 [node name="BLEAdapter" type="BLEAdapter" parent="."]
 
-[connection signal="pressed" from="Controls/ConnectScan/Connect" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="Controls/ConnectScan/Scan" to="." method="_on_scan_pressed"]
+[connection signal="pressed" from="Controls/ConnectScan/Connect" to="." method="_on_connect_pressed"]
 [connection signal="toggled" from="Controls/ConnectScan/Options/Update" to="." method="_on_updates_toggled"]
 [connection signal="toggled" from="Controls/ConnectScan/Options/Advance" to="." method="_on_advance_toggled"]
 [connection signal="toggled" from="Controls/Interactions/Notify" to="." method="_on_notify_toggled"]
