@@ -150,8 +150,8 @@ bool BLEAdapter::init(const String p_address) {
 									emit_signal("peripheral_disconnected", l_peripheral->second);
 
 								} else {
-									// Should not be possible
-									emit_signal("peripheral_error_status_updated", l_peripheral->second, BLEUtils::Status::ALREADY_DISCONNECTED, "callback_on_disconnected");
+									// Disconnect seems to be sent twice on Linux
+									UtilityFunctions::print_verbose("Peripheral already disconnected " + l_address);
 								} 
 							} catch (std::exception& l_exception) {
 								emit_signal("peripheral_error_status_updated", l_peripheral->second, BLEUtils::get_status(l_exception), "callback_on_disconnected");

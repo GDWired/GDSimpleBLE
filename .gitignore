@@ -9,6 +9,7 @@ logs/*
 *.log
 
 # Binaries
+*.a
 *.o
 *.os
 *.so

@@ -21,9 +21,15 @@ env = SConscript("godot-cpp/SConstruct")
 # Sources
 env.Append(CPPPATH=["src/"])
 
-# SimpleBLE macOS path
-env.Append(CPPPATH=["SimpleBLE/include"])
-env.Append(LIBS=["libsimpleble.a"])
+if env["platform"] == "macos":
+	env.Append(CPPPATH=["SimpleBLE/include"])
+	env.Append(LIBS=["libsimpleble.a"])
+elif env["platform"] == "linux":
+	env.Append(CPPPATH=["SimpleBLE/include"])
+	env.Append(LIBS=["libsimpleble.a"])
+	env.Append(LIBS=["libsimplebluez.a"])
+	env.Append(LIBS=["libsimpledbus.a"])
+	env.Append(LIBS=["libdbus-1.so"])
 
 # SimpleBLE make
 if env["target"] == "debug":
@@ -49,7 +55,7 @@ if env["platform"] == "macos":
 	)
 else:
 	library = env.SharedLibrary(
-		"demo/bin/libgodotsimpleble.{}.{}.{}{}".format(
+		"demo/addons/simple_ble/bin/libgodotsimpleble.{}.{}.{}{}".format(
 			env["platform"], env["target"], env["arch_suffix"], env["SHLIBSUFFIX"]
 		),
 		source=sources,
