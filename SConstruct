@@ -21,6 +21,7 @@ env = SConscript("godot-cpp/SConstruct")
 # Sources
 env.Append(CPPPATH=["src/"])
 
+# Libs path
 if env["platform"] == "macos":
 	env.Append(CPPPATH=["SimpleBLE/include"])
 	env.Append(LIBS=["libsimpleble.a"])
@@ -37,7 +38,6 @@ if env["target"] == "debug":
 	sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Debug", "-BSimpleBLE/debug", "-SSimpleBLE"])
 	sys_exec(["make", "-C", "SimpleBLE/debug"])
 	env.Append(LIBPATH=[env.Dir("SimpleBLE/debug/bin")])
-
 else:
 	sys_exec(["mkdir", "SimpleBLE/release"])
 	sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=release", "-BSimpleBLE/release", "-SSimpleBLE"])
