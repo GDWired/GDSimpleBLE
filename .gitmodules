@@ -1,6 +1,6 @@
 [submodule "godot-cpp"]
 	path = godot-cpp
-	url = ./godot-cpp
+	url = git@github.com:BastiaanOlij/gdnative_cpp_example.git
 [submodule "SimpleBLE"]
 	path = SimpleBLE
-	url = ./SimpleBLE
+	url = git@github.com:OpenBluetoothToolbox/SimpleBLE.git
