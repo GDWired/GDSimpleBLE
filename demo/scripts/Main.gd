@@ -58,21 +58,19 @@ func _print_peripheral(peripheral : BLEPeripheral, prompt : String, data : Strin
 # On scan button pressed
 func _on_scan_pressed() -> void:
 	if !_ble_adapter.scan_is_active():
-		if !_ble_adapter.scan_start():
-			_terminal.writeln("Adapter not found, please try to init first...", Color.RED)
-	elif !_ble_adapter.scan_stop():
-		_terminal.writeln("Adapter not found, please try to init first...", Color.RED)
+		_ble_adapter.scan_start()
+	else:
+		_ble_adapter.scan_stop()
 
 
 # On connect button pressed
 func _on_connect_pressed() -> void:
 	var peripheral : BLEPeripheral = _ble_adapter.get_peripheral(_peripheral.text)
-	if peripheral == null:
-		_terminal.writeln("Peripheral not found, please try to scan first...", Color.RED)
-	elif peripheral.is_connected:
-		peripheral.disconnect_peripheral()
-	elif !peripheral.connect_peripheral():
-		_terminal.writeln("Peripheral no longer valid, please check your device and start scan again", Color.RED)
+	if peripheral != null:
+		if peripheral.is_connected:
+			peripheral.disconnect_peripheral()
+		else:
+			peripheral.connect_peripheral()
 
 
 # On read button pressed
