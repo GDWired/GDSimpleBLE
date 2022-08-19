@@ -132,7 +132,8 @@ String BLEUtils::get_code_string(const int p_code) {
 
 String BLEUtils::get_company_name(const int p_code) {
 	try {
-		return String(s_company_identifiers->at(p_code).c_str());
+		const auto& l_string = s_company_identifiers->at(p_code);
+		return String::utf8(l_string.c_str(), l_string.length());
 	} catch (...) {
 		return "UNKNOWN";
 	}

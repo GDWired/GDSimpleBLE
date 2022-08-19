@@ -14,7 +14,7 @@ using namespace godot;
 BLEPeripheral::BLEPeripheral(SimpleBLE::Peripheral& p_peripheral, BLEAdapter* p_adapter) : m_peripheral(p_peripheral), m_adapter(p_adapter) {
 	try {
 		m_address = String(p_peripheral.address().c_str());
-		m_identifier = String(p_peripheral.identifier().c_str());
+		m_identifier = String::utf8(p_peripheral.identifier().c_str(), p_peripheral.identifier().length());
 		m_has_no_identifier = m_identifier == "";
 		if (m_has_no_identifier) {
 			m_identifier = "UNKNOWN";

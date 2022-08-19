@@ -10,7 +10,7 @@ extends Control
 @onready var _terminal : Terminal = $Terminal
 
 @onready var _connect : Button = $Controls/ConnectScan/Connect
-@onready var _infos : Button = $Controls/ConnectScan/Infos
+#@onready var _infos : Button = $Controls/ConnectScan/Infos
 
 @onready var _peripheral : LineEdit = $Controls/Connection/Peripheral
 @onready var _service : LineEdit = $Controls/Connection/Service
@@ -81,7 +81,7 @@ func _on_read_pressed() -> void:
 	var return_value = peripheral.read(_service.text, _characteristic.text)
 	if return_value != null:
 		var bytes : PackedByteArray = return_value
-		_print_peripheral(peripheral, "Read", bytes.get_string_from_ascii())
+		_print_peripheral(peripheral, "Read", bytes.get_string_from_utf8())
 
 
 # On send button pressed
@@ -94,15 +94,18 @@ func _on_send_pressed() -> void:
 # On infos button pressed
 func _on_infos_pressed() -> void:
 	var peripheral : BLEPeripheral = _ble_adapter.get_peripheral(_peripheral.text)
-	for data in peripheral.manufacturer_data:
-		var bytes : PackedByteArray = peripheral.manufacturer_data[data];
-		_print_line("Manufacturer data", BLEUtils.get_company_name(data) + " (0x" + bytes.hex_encode() + ")")
-	for service in peripheral.services:
-		_print_line("Service", service)
-		for caracteristic in peripheral.services[service]:
-			_print_line("	Caracteristic", caracteristic)
-			for descriptor in peripheral.services[service][caracteristic]:
-				_print_line("		Descriptor", descriptor)
+	if peripheral == null:
+		_terminal.writeln("Peripheral not found, please try to scan first...", Color.RED)
+	else:
+		for data in peripheral.manufacturer_data:
+			var bytes : PackedByteArray = peripheral.manufacturer_data[data];
+			_print_line("Manufacturer data", BLEUtils.get_company_name(data) + " (0x" + bytes.hex_encode() + ")")
+		for service in peripheral.services:
+			_print_line("Service", service)
+			for caracteristic in peripheral.services[service]:
+				_print_line("	Caracteristic", caracteristic)
+				for descriptor in peripheral.services[service][caracteristic]:
+					_print_line("		Descriptor", descriptor)
 
 
 # On notify button toggled
@@ -135,12 +138,12 @@ func _on_ble_adapter_scan_stopped() -> void:
 
 # On peripheral indicate
 func _on_ble_adapter_peripheral_indicated(peripheral : BLEPeripheral, payload : PackedByteArray) -> void:
-	_print_peripheral(peripheral, "Indicate", payload.get_string_from_ascii())
+	_print_peripheral(peripheral, "Indicate", payload.get_string_from_utf8())
 
 
 # On peripheral notify
 func _on_ble_adapter_peripheral_notified(peripheral : BLEPeripheral, payload : PackedByteArray) -> void:
-	_print_peripheral(peripheral, "Notify", payload.get_string_from_ascii())
+	_print_peripheral(peripheral, "Notify", payload.get_string_from_utf8())
 
 
 # On peripheral connected
@@ -151,7 +154,6 @@ func _on_ble_adapter_peripheral_connected(peripheral : BLEPeripheral) -> void:
 		_notify.disabled = false
 		_read.disabled = false
 		_send.disabled = false
-		_infos.disabled = false 
 
 
 # On peripheral disconnected
@@ -161,7 +163,6 @@ func _on_ble_adapter_peripheral_disconnected(peripheral : BLEPeripheral) -> void
 	_notify.disabled = true
 	_read.disabled = true
 	_send.disabled = true
-	_infos.disabled = true
 
 
 # On peripheral udpated

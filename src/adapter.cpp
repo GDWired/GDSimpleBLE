@@ -269,7 +269,9 @@ Variant BLEAdapter::get_identifier() {
 		if (!m_adapter) {
 			return nullptr;
 		}
-		return String(m_adapter->identifier().c_str());
+		auto l_identifier = String();
+		l_identifier.parse_utf8(m_adapter->identifier().c_str(), m_adapter->identifier().length());
+		return l_identifier;
 	} catch (std::exception& l_exception) {
 		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(__func__));
 		return nullptr;

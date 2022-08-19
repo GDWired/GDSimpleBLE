@@ -94,7 +94,6 @@ offset_left = 502.0
 offset_right = 749.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
-disabled = true
 text = "Infos"
 
 [node name="Options" type="HBoxContainer" parent="Controls/ConnectScan"]
