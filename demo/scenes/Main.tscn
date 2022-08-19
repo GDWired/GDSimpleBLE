@@ -70,36 +70,36 @@ grow_vertical = 0
 metadata/_edit_layout_mode = 1
 
 [node name="ConnectScan" type="HBoxContainer" parent="Controls"]
-offset_right = 1132.0
+offset_right = 1004.0
 offset_bottom = 31.0
 alignment = 1
 
 [node name="Scan" type="Button" parent="Controls/ConnectScan"]
 custom_minimum_size = Vector2(200, 0)
-offset_right = 290.0
+offset_right = 247.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Scan"
 
 [node name="Connect" type="Button" parent="Controls/ConnectScan"]
 custom_minimum_size = Vector2(200, 0)
-offset_left = 294.0
-offset_right = 584.0
+offset_left = 251.0
+offset_right = 498.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Connect"
 
 [node name="Infos" type="Button" parent="Controls/ConnectScan"]
-offset_left = 588.0
-offset_right = 878.0
+offset_left = 502.0
+offset_right = 749.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "Infos"
 
 [node name="Options" type="HBoxContainer" parent="Controls/ConnectScan"]
 custom_minimum_size = Vector2(250, 0)
-offset_left = 882.0
-offset_right = 1132.0
+offset_left = 753.0
+offset_right = 1003.0
 offset_bottom = 31.0
 alignment = 1
 
@@ -120,28 +120,28 @@ text = "Advance"
 
 [node name="Connection" type="HBoxContainer" parent="Controls"]
 offset_top = 35.0
-offset_right = 1132.0
+offset_right = 1004.0
 offset_bottom = 66.0
 alignment = 1
 
 [node name="Peripheral" type="LineEdit" parent="Controls/Connection"]
-offset_right = 374.0
+offset_right = 332.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "823A7171-DD98-45E8-C0CD-5D272E51A0AE"
 placeholder_text = "Peripheral"
 
 [node name="Service" type="LineEdit" parent="Controls/Connection"]
-offset_left = 378.0
-offset_right = 753.0
+offset_left = 336.0
+offset_right = 668.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
 placeholder_text = "Service"
 
 [node name="Characteristic" type="LineEdit" parent="Controls/Connection"]
-offset_left = 757.0
-offset_right = 1132.0
+offset_left = 672.0
+offset_right = 1004.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 text = "6E400004-B5A3-F393-E0A9-E50E24DCCA9E"
@@ -149,12 +149,12 @@ placeholder_text = "Characteristic"
 
 [node name="Interactions" type="HBoxContainer" parent="Controls"]
 offset_top = 70.0
-offset_right = 1132.0
+offset_right = 1004.0
 offset_bottom = 101.0
 alignment = 1
 
 [node name="Notify" type="Button" parent="Controls/Interactions"]
-offset_right = 280.0
+offset_right = 248.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 disabled = true
@@ -162,24 +162,24 @@ toggle_mode = true
 text = "Notify"
 
 [node name="Read" type="Button" parent="Controls/Interactions"]
-offset_left = 284.0
-offset_right = 564.0
+offset_left = 252.0
+offset_right = 500.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 disabled = true
 text = "Read"
 
 [node name="Send" type="Button" parent="Controls/Interactions"]
-offset_left = 568.0
-offset_right = 848.0
+offset_left = 504.0
+offset_right = 752.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 disabled = true
 text = "Send"
 
 [node name="Data" type="LineEdit" parent="Controls/Interactions"]
-offset_left = 852.0
-offset_right = 1132.0
+offset_left = 756.0
+offset_right = 1004.0
 offset_bottom = 31.0
 size_flags_horizontal = 3
 placeholder_text = "Data to send"

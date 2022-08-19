@@ -20,12 +20,10 @@ void BLEUtils::_bind_methods() {
 	ClassDB::bind_integer_constant(get_class_static(), "", "INTERNAL_ERROR", BLEUtils::Status::INTERNAL_ERROR);
 
 	ClassDB::bind_integer_constant(get_class_static(), "", "NOT_FOUND", BLEUtils::Status::NOT_FOUND);
-	ClassDB::bind_integer_constant(get_class_static(), "", "ALREADY_CONNECTED", BLEUtils::Status::ALREADY_CONNECTED);
-	ClassDB::bind_integer_constant(get_class_static(), "", "ALREADY_DISCONNECTED", BLEUtils::Status::ALREADY_DISCONNECTED);
 	ClassDB::bind_integer_constant(get_class_static(), "", "UNKNOWN", BLEUtils::Status::UNKNOWN);
 }
 
-const Dictionary BLEUtils::get_manufacturer_data(std::map<uint16_t, SimpleBLE::ByteArray> p_manufacturer_data) {
+const Dictionary BLEUtils::get_manufacturer_data(const std::map<uint16_t, SimpleBLE::ByteArray>& p_manufacturer_data) {
 	Dictionary l_return_data;
 	for (const auto& [manufacturer_id, data] : p_manufacturer_data) {
 		l_return_data[manufacturer_id] = BLEUtils::string_to_byte_array(data.c_str());
@@ -33,7 +31,7 @@ const Dictionary BLEUtils::get_manufacturer_data(std::map<uint16_t, SimpleBLE::B
 	return l_return_data;
 }
 
-const Dictionary BLEUtils::get_services(std::vector<SimpleBLE::Service> p_services) {
+const Dictionary BLEUtils::get_services(std::vector<SimpleBLE::Service>& p_services) {
 	// For each services
 	Dictionary l_services;
 	for (auto& l_service : p_services) {
@@ -121,10 +119,6 @@ String BLEUtils::get_code_string(const int p_code) {
 			return "Internal error (WinRT or CoreBluetooh)";
 		case NOT_FOUND:
 			return "Not found";
-		case ALREADY_CONNECTED:
-			return "Already connected";
-		case ALREADY_DISCONNECTED:
-			return "Already disconected";
 		default:
 			return "Unknown";
 	}

@@ -23,8 +23,9 @@ BLEPeripheral::BLEPeripheral(SimpleBLE::Peripheral& p_peripheral, BLEAdapter* p_
 		m_is_connected = p_peripheral.is_connected();
 		m_is_connectable = p_peripheral.is_connectable();
 		if (p_peripheral.is_connected()) {
-			m_services_count = static_cast<int>(p_peripheral.services().size());
-			m_services = BLEUtils::get_services(p_peripheral.services());
+			auto l_services = p_peripheral.services();
+			m_services_count = static_cast<int>(l_services.size());
+			m_services = BLEUtils::get_services(l_services);
 
 		} else {
 			m_services_count = 0;
@@ -83,8 +84,9 @@ void BLEPeripheral::update(SimpleBLE::Peripheral& p_peripheral) {
 		m_rssi = p_peripheral.rssi();
 		m_is_connected = p_peripheral.is_connected();
 		if (p_peripheral.is_connected()) {
-			m_services_count = static_cast<int>(p_peripheral.services().size());
-			m_services = BLEUtils::get_services(p_peripheral.services());
+			auto l_services = p_peripheral.services();
+			m_services_count = static_cast<int>(l_services.size());
+			m_services = BLEUtils::get_services(l_services);
 
 		} else {
 			m_services_count = 0;

@@ -30,8 +30,6 @@ class BLEUtils : public Object {
 		OPERATION_FAILED,
 		INTERNAL_ERROR,
 		NOT_FOUND,
-		ALREADY_CONNECTED,
-		ALREADY_DISCONNECTED,
 		UNKNOWN
 	};
 
@@ -60,14 +58,14 @@ class BLEUtils : public Object {
 		 * @param p_manufacturer_data manufacturer data
 		 * @return manufacturer data as dictionary
 		 */
-		static const Dictionary get_manufacturer_data(std::map<uint16_t, SimpleBLE::ByteArray> p_manufacturer_data);
+		static const Dictionary get_manufacturer_data(const std::map<uint16_t, SimpleBLE::ByteArray>& p_manufacturer_data);
 
 		/**
 		 * Get all services as dictionary
 		 * @param p_services services
 		 * @return services as dictionary
 		 */
-		static const Dictionary get_services(std::vector<SimpleBLE::Service> p_services);
+		static const Dictionary get_services(std::vector<SimpleBLE::Service>& p_services);
 
 		/**
 		 * Transform ByteArray to PackedByteArray

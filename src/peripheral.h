@@ -268,7 +268,7 @@ class BLEPeripheral : public Object {
 		/**
 		 * Set is connected
 		 */
-		void set_is_connected(bool p_is_connected);
+		void set_is_connected(const bool p_is_connected);
 
 		/**
 		 * Get is connected
