@@ -209,3 +209,4 @@ mono_crash.*.json
 
 # macOS
 .DS_Store
+*.debug
