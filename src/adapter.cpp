@@ -49,7 +49,7 @@ void BLEAdapter::_bind_methods() {
 	
 	// Bind properties
 	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "peripherals"), nullptr, "get_peripherals");
-	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "connected_peripheral"), nullptr, "get_connected_peripherals");
+	ADD_PROPERTY(PropertyInfo(Variant::OBJECT, "connected_peripherals"), nullptr, "get_connected_peripherals");
 
 	// Add adapter signals
 	ADD_SIGNAL(MethodInfo("scan_started"));
