@@ -66,7 +66,9 @@ func _on_scan_pressed() -> void:
 # On connect button pressed
 func _on_connect_pressed() -> void:
 	var peripheral : BLEPeripheral = _ble_adapter.get_peripheral(_peripheral.text)
-	if peripheral != null:
+	if peripheral == null:
+		_terminal.writeln("Peripheral not found, please try to scan first...", Color.RED)
+	else:
 		if peripheral.is_connected:
 			peripheral.disconnect_peripheral()
 		else:
