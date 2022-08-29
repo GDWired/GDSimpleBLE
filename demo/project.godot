@@ -43,8 +43,8 @@ gdscript/warnings/unsafe_call_argument=1
 
 window/size/viewport_height=720
 window/size/resizable=false
-window/dpi/allow_hidpi=false
 window/energy_saving/keep_screen_on=false
+window/dpi/allow_hidpi=false
 
 [filesystem]
 
