@@ -26,7 +26,6 @@ logs/*
 *.files
 *.includes
 *.idb
-*.debug.*
 
 # Gprof output
 gmon.out
