@@ -12,13 +12,11 @@ logs/*
 *.a
 *.o
 *.os
-*.so
 *.obj
 *.bc
 *.pyc
 *.dblite
 *.pdb
-*.dll
 *.exp
 *.ilk
 *.lib
@@ -28,8 +26,7 @@ logs/*
 *.files
 *.includes
 *.idb
-*.debug
-*.release
+*.debug.*
 
 # Gprof output
 gmon.out
