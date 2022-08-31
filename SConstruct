@@ -4,9 +4,13 @@ import sys
 import subprocess
 
 def sys_exec(args):
+    if env["platform"] == "windows":
+        args.insert(0, "powershell.exe")
     proc = subprocess.Popen(args, stdout=subprocess.PIPE, text=True)
     (out, err) = proc.communicate()
     return out.rstrip("\r\n").lstrip()
+
+env = SConscript("godot-cpp/SConstruct")
 
 simpleble_base = "SimpleBLE/simpleble"
 simplebluez_base = "SimpleBLE/simplebluez"
@@ -20,7 +24,6 @@ if GetOption("clean"):
     sys_exec(["rm", "-fr", "{}/debug".format(simplebluez_base)])
     sys_exec(["rm", "-fr", "{}/debug".format(simpledbus_base)])
 else:
-    env = SConscript("godot-cpp/SConstruct")
 
     # For the reference:
     # - CCFLAGS are compilation flags shared between C and C++
@@ -37,6 +40,9 @@ else:
     if env["platform"] == "macos":
         env.Append(CPPPATH=["{}/include".format(simpleble_base)])
         env.Append(LIBS=["libsimpleble.a"])
+    elif env["platform"] == "windows":
+        env.Append(CPPPATH=["{}/include".format(simpleble_base)])
+        env.Append(LIBS=["simpleble.lib"])
     elif env["platform"] == "linux":
         env.Append(CPPPATH=["{}/include".format(simpleble_base)])
         env.Append(LIBS=["libsimpleble.a"])
@@ -51,8 +57,8 @@ else:
             sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Debug", "-B{}/{}".format(simplebluez_base, env["target"]), "-S{}".format(simplebluez_base)])
         else:
             sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Release", "-B{}/{}".format(simplebluez_base, env["target"]), "-S{}".format(simplebluez_base)])
-        sys_exec(["make", "-C", "{}/{}".format(simplebluez_base, env["target"])])
         env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(simplebluez_base, env["target"]))])
+        sys_exec(["cmake", "--build", "{}/{}".format(simplebluez_base, env["target"])])
 
         # SimpleDBus make
         env.Append(CPPPATH=["{}/{}/export".format(simpledbus_base, env["target"])])
@@ -61,18 +67,25 @@ else:
             sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Debug", "-B{}/{}".format(simpledbus_base, env["target"]), "-S{}".format(simpledbus_base)])
         else:
             sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Release", "-B{}/{}".format(simpledbus_base, env["target"]), "-S{}".format(simpledbus_base)])
-        sys_exec(["make", "-C", "{}/{}".format(simpledbus_base, env["target"])])
         env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(simpledbus_base, env["target"]))])
+        sys_exec(["cmake", "--build", "{}/{}".format(simpledbus_base, env["target"])])
 
     # SimpleBLE make
     env.Append(CPPPATH=["{}/{}/export".format(simpleble_base, env["target"])])
     sys_exec(["mkdir", "{}/{}".format(simpleble_base, env["target"])])
     if env["target"] == "debug":
         sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Debug", "-B{}/{}".format(simpleble_base, env["target"]), "-S{}".format(simpleble_base)])
+        if env["platform"] == "windows":
+            env.Append(LIBPATH=[env.Dir("{}/{}/lib/Debug".format(simpleble_base, env["target"]))])
     else:
         sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Release", "-B{}/{}".format(simpleble_base, env["target"]), "-S{}".format(simpleble_base)])
-    sys_exec(["make", "-C", "{}/{}".format(simpleble_base, env["target"])])
-    env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(simpleble_base, env["target"]))])
+        if env["platform"] == "windows":
+            env.Append(LIBPATH=[env.Dir("{}/{}/lib/Release".format(simpleble_base, env["target"]))])
+    
+    if env["platform"] != "windows":
+        env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(simpleble_base, env["target"]))])
+
+    sys_exec(["cmake", "--build", "{}/{}".format(simpleble_base, env["target"])])
 
     sources = Glob("src/*.cpp")
 

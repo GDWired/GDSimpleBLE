@@ -18,6 +18,9 @@ logs/*
 *.pyc
 *.dblite
 *.pdb
+*.dll
+*.exp
+*.ilk
 *.lib
 *.config
 *.creator
