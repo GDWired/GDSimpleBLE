@@ -35,15 +35,6 @@ if GetOption("clean"):
     sys_exec(["rm", "-fr", "{}/debug".format(simplebluez_base)])
     sys_exec(["rm", "-fr", "{}/debug".format(simpledbus_base)])
 else:
-
-    # For the reference:
-    # - CCFLAGS are compilation flags shared between C and C++
-    # - CFLAGS are for C-specific compilation flags
-    # - CXXFLAGS are for C++-specific compilation flags
-    # - CPPFLAGS are for pre-processor flags
-    # - CPPDEFINES are for pre-processor defines
-    # - LINKFLAGS are for linking flags
-
     # Sources
     env.Append(CPPPATH=["src/"])
 
@@ -74,8 +65,6 @@ else:
 
     # SimpleBLE make
     compile(simpleble_base)
-
-    sys_exec(["cmake", "--build", "{}/{}".format(simpleble_base, env["target"])])
 
     sources = Glob("src/*.cpp")
 
