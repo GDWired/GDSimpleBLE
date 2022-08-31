@@ -10,11 +10,22 @@ def sys_exec(args):
     (out, err) = proc.communicate()
     return out.rstrip("\r\n").lstrip()
 
+def compile(base_dir):
+    env.Append(CPPPATH=["{}/{}/export".format(base_dir, env["target"])])
+    sys_exec(["mkdir", "{}/{}".format(base_dir, env["target"])])
+    sys_exec(["cmake", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir)])
+    sys_exec(["cmake", "--build", "{}/{}".format(base_dir, env["target"]), "--config", cmake_target])
+    if env["platform"] == "windows":
+        env.Append(LIBPATH=[env.Dir("{}/{}/lib/{}".format(simpleble_base, env["target"], cmake_target))])
+    else:
+        env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(base_dir, env["target"]))])
+
 env = SConscript("godot-cpp/SConstruct")
 
 simpleble_base = "SimpleBLE/simpleble"
 simplebluez_base = "SimpleBLE/simplebluez"
 simpledbus_base = "SimpleBLE/simpledbus"
+cmake_target = ""
 
 if GetOption("clean"):
     sys_exec(["rm", "-fr", "{}/release".format(simpleble_base)])
@@ -36,6 +47,11 @@ else:
     # Sources
     env.Append(CPPPATH=["src/"])
 
+    if env["target"] == "debug":
+        cmake_target = "Debug"
+    else:
+        cmake_target = "Release"
+
     # Libs path
     if env["platform"] == "macos":
         env.Append(CPPPATH=["{}/include".format(simpleble_base)])
@@ -51,39 +67,13 @@ else:
         env.Append(LIBS=["libdbus-1.so"])
         
         # SimpleBluez make
-        env.Append(CPPPATH=["{}/{}/export".format(simplebluez_base, env["target"])])
-        sys_exec(["mkdir", "{}/{}".format(simplebluez_base, env["target"])])
-        if env["target"] == "debug":
-            sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Debug", "-B{}/{}".format(simplebluez_base, env["target"]), "-S{}".format(simplebluez_base)])
-        else:
-            sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Release", "-B{}/{}".format(simplebluez_base, env["target"]), "-S{}".format(simplebluez_base)])
-        env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(simplebluez_base, env["target"]))])
-        sys_exec(["cmake", "--build", "{}/{}".format(simplebluez_base, env["target"])])
+        compile(simplebluez_base)
 
         # SimpleDBus make
-        env.Append(CPPPATH=["{}/{}/export".format(simpledbus_base, env["target"])])
-        sys_exec(["mkdir", "{}/{}".format(simpledbus_base, env["target"])])
-        if env["target"] == "debug":
-            sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Debug", "-B{}/{}".format(simpledbus_base, env["target"]), "-S{}".format(simpledbus_base)])
-        else:
-            sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Release", "-B{}/{}".format(simpledbus_base, env["target"]), "-S{}".format(simpledbus_base)])
-        env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(simpledbus_base, env["target"]))])
-        sys_exec(["cmake", "--build", "{}/{}".format(simpledbus_base, env["target"])])
+        compile(simpledbus_base)
 
     # SimpleBLE make
-    env.Append(CPPPATH=["{}/{}/export".format(simpleble_base, env["target"])])
-    sys_exec(["mkdir", "{}/{}".format(simpleble_base, env["target"])])
-    if env["target"] == "debug":
-        sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Debug", "-B{}/{}".format(simpleble_base, env["target"]), "-S{}".format(simpleble_base)])
-        if env["platform"] == "windows":
-            env.Append(LIBPATH=[env.Dir("{}/{}/lib/Debug".format(simpleble_base, env["target"]))])
-    else:
-        sys_exec(["cmake", "-DCMAKE_BUILD_TYPE=Release", "-B{}/{}".format(simpleble_base, env["target"]), "-S{}".format(simpleble_base)])
-        if env["platform"] == "windows":
-            env.Append(LIBPATH=[env.Dir("{}/{}/lib/Release".format(simpleble_base, env["target"]))])
-    
-    if env["platform"] != "windows":
-        env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(simpleble_base, env["target"]))])
+    compile(simpleble_base)
 
     sys_exec(["cmake", "--build", "{}/{}".format(simpleble_base, env["target"])])
 
@@ -91,17 +81,17 @@ else:
 
     if env["platform"] == "macos":
         library = env.SharedLibrary(
-	        "demo/addons/simple_ble/bin/libgodotsimpleble.{}.{}.framework/libgodotsimpleble.{}.{}".format(
-		        env["platform"], env["target"], env["platform"], env["target"]
-	        ),
-	        source=sources,
+            "demo/addons/simple_ble/bin/libgodotsimpleble.{}.{}.framework/libgodotsimpleble.{}.{}".format(
+                env["platform"], env["target"], env["platform"], env["target"]
+            ),
+            source=sources,
         )
     else:
         library = env.SharedLibrary(
-	        "demo/addons/simple_ble/bin/libgodotsimpleble.{}.{}.{}{}".format(
-		        env["platform"], env["target"], env["arch_suffix"], env["SHLIBSUFFIX"]
-	        ),
-	        source=sources,
+            "demo/addons/simple_ble/bin/libgodotsimpleble.{}.{}.{}{}".format(
+                env["platform"], env["target"], env["arch_suffix"], env["SHLIBSUFFIX"]
+            ),
+            source=sources,
         )
 
     Default(library)
