@@ -1,10 +1,11 @@
 #!/usr/bin/env python
 import os
+import platform
 import sys
 import subprocess
 
 def sys_exec(args):
-    if env["platform"] == "windows":
+    if platform.system() == "Windows":
         args.insert(0, "powershell.exe")
     proc = subprocess.Popen(args, stdout=subprocess.PIPE, text=True)
     (out, err) = proc.communicate()
@@ -13,9 +14,13 @@ def sys_exec(args):
 def compile(base_dir):
     env.Append(CPPPATH=["{}/{}/export".format(base_dir, env["target"])])
     sys_exec(["mkdir", "{}/{}".format(base_dir, env["target"])])
-    sys_exec(["cmake", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir)])
+    if env["platform"] == "ios":
+        sys_exec(["cmake", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir), "-G", "Xcode", "-DCMAKE_TOOLCHAIN_FILE=../../ios.toolchain.cmake" , "-DPLATFORM=OS64"])
+    else:
+        sys_exec(["cmake", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir)])
     sys_exec(["cmake", "--build", "{}/{}".format(base_dir, env["target"]), "--config", cmake_target])
-    if env["platform"] == "windows":
+    if env["platform"] == "Windows" or env["platform"] == "ios":
+        print("{}/{}/lib/{}".format(simpleble_base, env["target"], cmake_target))
         env.Append(LIBPATH=[env.Dir("{}/{}/lib/{}".format(simpleble_base, env["target"], cmake_target))])
     else:
         env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(base_dir, env["target"]))])
@@ -44,7 +49,7 @@ else:
         cmake_target = "Release"
 
     # Libs path
-    if env["platform"] == "macos":
+    if env["platform"] == "macos" or env["platform"] == "ios":
         env.Append(CPPPATH=["{}/include".format(simpleble_base)])
         env.Append(LIBS=["libsimpleble.a"])
     elif env["platform"] == "windows":
@@ -68,7 +73,7 @@ else:
 
     sources = Glob("src/*.cpp")
 
-    if env["platform"] == "macos":
+    if env["platform"] == "macos" or env["platform"] == "ios":
         library = env.SharedLibrary(
             "demo/addons/simple_ble/bin/libgodotsimpleble.{}.{}.framework/libgodotsimpleble.{}.{}".format(
                 env["platform"], env["target"], env["platform"], env["target"]
