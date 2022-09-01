@@ -13,5 +13,5 @@ To compile it:
  - Run `scons` on the root project folder.
  - Start Godot4 and open the project in the `demo` folder.
  
- Exports from the Godot project don't seem to work...
+ Exports from the Godot don't seem to work...
  
