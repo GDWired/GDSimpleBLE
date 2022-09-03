@@ -19,8 +19,7 @@ def compile(base_dir):
     else:
         sys_exec(["cmake", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir)])
     sys_exec(["cmake", "--build", "{}/{}".format(base_dir, env["target"]), "--config", cmake_target])
-    if env["platform"] == "Windows" or env["platform"] == "ios":
-        print("{}/{}/lib/{}".format(simpleble_base, env["target"], cmake_target))
+    if env["platform"] == "windows" or env["platform"] == "ios":
         env.Append(LIBPATH=[env.Dir("{}/{}/lib/{}".format(simpleble_base, env["target"], cmake_target))])
     else:
         env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(base_dir, env["target"]))])
