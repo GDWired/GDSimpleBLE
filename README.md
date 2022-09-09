@@ -6,7 +6,7 @@ You can find a plugin for Godot3.5, while waiting for the porting of GDSimpleBLE
 
 The project works on macOS, Linux and Windows but exports from Godot don't seem to work well... it works for Linux and Windows only in debug and doesn't work at all on macOS and iOS (SimpleBLE is not yet available for Android). The executables are in the `exports` folder (Linux and Windows).
 
-The Godot4 version while by in pause in order to focus on Godot3.5 version.
+The Godot4 version is on pause in order to concentrate on the Godot3.5 version.
 
 To compile it:
  - Run `git clone --recurse-submodules https://github.com/jferdelyi/GDSimpleBLE.git`
