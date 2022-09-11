@@ -8,13 +8,12 @@ extends RichTextLabel
 
 
 ## Write line in the terminal
-func writeln(text_to_write: String, color: Color = Color.WHITE) -> void:
+func writeln(text_to_write: String, color: Color = Color.white) -> void:
 	write(text_to_write + '\n', color)
 
 
 ## Write in the terminal (because print is already used)
-func write(text_to_write: String, color: Color = Color.WHITE) -> void:
-	# warning-ignore:return_value_discarded 
-	# Always true (backwards compatibility)
-	append_text("[color=#" + color.to_html(false) + "]" + text_to_write + "[/color]")
+func write(text_to_write: String, color: Color = Color.white) -> void:
+	# warning-ignore:return_value_discarded
+	call_deferred("append_bbcode", "[color=#" + color.to_html(false) + "]" + text_to_write + "[/color]")
 

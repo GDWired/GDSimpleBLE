@@ -1,9 +1,22 @@
-#!/usr/bin/env python
+#!python
 import os
 import platform
 import sys
 import subprocess
 
+# For the reference:
+# - CCFLAGS are compilation flags shared between C and C++
+# - CFLAGS are for C-specific compilation flags
+# - CXXFLAGS are for C++-specific compilation flags
+# - CPPFLAGS are for pre-processor flags
+# - CPPDEFINES are for pre-processor defines
+# - LINKFLAGS are for linking flags
+
+###############
+## FUNCTIONS ##
+###############
+
+# Execute system 
 def sys_exec(args):
     if platform.system() == "Windows":
         args.insert(0, "powershell.exe")
@@ -11,31 +24,31 @@ def sys_exec(args):
     (out, err) = proc.communicate()
     return out.rstrip("\r\n").lstrip()
 
+# Compile using CMake
 def compile(base_dir):
     env.Append(CPPPATH=["{}/{}/export".format(base_dir, env["target"])])
     sys_exec(["mkdir", "{}/{}".format(base_dir, env["target"])])
-    
     if env["platform"] == "osx":
         sys_exec(["cmake", "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir)])
-    elif env["platform"] == "ios":
-        sys_exec(["cmake", "-DCMAKE_OSX_ARCHITECTURES=arm64", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir), "-GXcode", "-DCMAKE_SYSTEM_NAME=iOS"])
     else:
         sys_exec(["cmake", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir)])
-    
     sys_exec(["cmake", "--build", "{}/{}".format(base_dir, env["target"]), "--config", cmake_target])
-    
-    if env["platform"] == "windows" or env["platform"] == "ios":
-        env.Append(LIBPATH=[env.Dir("{}/{}/lib/{}".format(simpleble_base, env["target"], cmake_target))])
+    if env["platform"] == "windows":
+        env.Append(LIBPATH=[env.Dir("{}/{}/lib/{}/".format(simpleble_base, env["target"], cmake_target))])
     else:
-        env.Append(LIBPATH=[env.Dir("{}/{}/lib".format(base_dir, env["target"]))])
+        env.Append(LIBPATH=[env.Dir("{}/{}/lib/".format(base_dir, env["target"]))])
+
+##########
+## MAIN ##
+##########
 
 env = SConscript("godot-cpp/SConstruct")
 
 simpleble_base = "SimpleBLE/simpleble"
 simplebluez_base = "SimpleBLE/simplebluez"
 simpledbus_base = "SimpleBLE/simpledbus"
-cmake_target = ""
 
+# Clean all build folders
 if GetOption("clean"):
     sys_exec(["rm", "-fr", "{}/release".format(simpleble_base)])
     sys_exec(["rm", "-fr", "{}/release".format(simplebluez_base)])
@@ -44,7 +57,7 @@ if GetOption("clean"):
     sys_exec(["rm", "-fr", "{}/debug".format(simplebluez_base)])
     sys_exec(["rm", "-fr", "{}/debug".format(simpledbus_base)])
 else:
-    # Sources
+     # Sources
     env.Append(CPPPATH=["src/"])
 
     if env["target"] == "debug":
@@ -52,44 +65,32 @@ else:
     else:
         cmake_target = "Release"
 
-    # Libs path
-    if env["platform"] == "macos" or env["platform"] == "ios":
+    # Check our platform specifics
+    if env['platform'] == "osx":
         env.Append(CPPPATH=["{}/include".format(simpleble_base)])
         env.Append(LIBS=["libsimpleble.a"])
-    elif env["platform"] == "windows":
-        env.Append(CPPPATH=["{}/include".format(simpleble_base)])
-        env.Append(LIBS=["simpleble.lib"])
-    elif env["platform"] == "linux":
+
+    elif env['platform'] in ('x11', 'linux'):
         env.Append(CPPPATH=["{}/include".format(simpleble_base)])
         env.Append(LIBS=["libsimpleble.a"])
         env.Append(LIBS=["libsimplebluez.a"])
         env.Append(LIBS=["libsimpledbus.a"])
         env.Append(LIBS=["libdbus-1.so"])
         
-        # SimpleBluez make
+        # SimpleBluez
         compile(simplebluez_base)
 
-        # SimpleDBus make
+        # SimpleDBus
         compile(simpledbus_base)
 
-    # SimpleBLE make
+    elif env['platform'] == "windows":
+        env.Append(CPPPATH=["{}/include".format(simpleble_base)])
+        env.Append(LIBS=["simpleble.lib"])
+
+    # SimpleBLE
     compile(simpleble_base)
 
+    # Create lib
     sources = Glob("src/*.cpp")
-
-    if env["platform"] == "macos" or env["platform"] == "ios":
-        library = env.SharedLibrary(
-            "demo/addons/simple_ble/bin/libgodotsimpleble.{}.{}.framework/libgodotsimpleble.{}.{}".format(
-                env["platform"], env["target"], env["platform"], env["target"]
-            ),
-            source=sources,
-        )
-    else:
-        library = env.SharedLibrary(
-            "demo/addons/simple_ble/bin/libgodotsimpleble.{}.{}.{}{}".format(
-                env["platform"], env["target"], env["arch_suffix"], env["SHLIBSUFFIX"]
-            ),
-            source=sources,
-        )
-
+    library = env.SharedLibrary("demo/addons/simpleble/{}/libgdsimpleble{}".format(env['platform'], env["SHLIBSUFFIX"]), source=sources)
     Default(library)

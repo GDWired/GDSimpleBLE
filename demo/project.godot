@@ -6,21 +6,33 @@
 ;   [section] ; section goes between []
 ;   param=value ; assign values to parameters
 
-config_version=5
+config_version=4
 
-_global_script_classes=[{
+_global_script_classes=[ {
 "base": "Node",
-"class": &"Peripheral",
-"language": &"GDScript",
-"path": "res://scripts/Peripheral.gd"
+"class": "BLEAdapter",
+"language": "GDScript",
+"path": "res://addons/simpleble/BLEAdapter.gd"
+}, {
+"base": "Node",
+"class": "BLEPeripheral",
+"language": "GDScript",
+"path": "res://addons/simpleble/BLEPeripheral.gd"
+}, {
+"base": "Node",
+"class": "GDSimpleBLE",
+"language": "NativeScript",
+"path": "res://addons/simpleble/SimpleBLE.gdns"
 }, {
 "base": "RichTextLabel",
-"class": &"Terminal",
-"language": &"GDScript",
+"class": "Terminal",
+"language": "GDScript",
 "path": "res://scripts/Terminal.gd"
-}]
+} ]
 _global_script_class_icons={
-"Peripheral": "",
+"BLEAdapter": "",
+"BLEPeripheral": "",
+"GDSimpleBLE": "",
 "Terminal": ""
 }
 
@@ -28,32 +40,27 @@ _global_script_class_icons={
 
 config/name="GDSimpleBLE Demo"
 run/main_scene="res://scenes/Main.tscn"
-config/features=PackedStringArray("4.0")
-config/icon="res://icon.png"
+boot_splash/image="res://GDSimpleBLE.png"
+config/icon="res://GDSimpleBLE.png"
+config/macos_native_icon="res://GDSimpleBLE.icns"
+config/windows_native_icon="res://GDSimpleBLE.ico"
 
-[debug]
+[autoload]
 
-gdscript/warnings/treat_warnings_as_errors=true
-gdscript/warnings/unsafe_property_access=1
-gdscript/warnings/unsafe_method_access=1
-gdscript/warnings/unsafe_cast=1
-gdscript/warnings/unsafe_call_argument=1
+SimpleBLE="*res://addons/simpleble/SimpleBLE.tscn"
 
-[display]
+[editor_plugins]
 
-window/size/viewport_height=720
-window/size/resizable=false
-window/energy_saving/keep_screen_on=false
-window/dpi/allow_hidpi=false
+enabled=PoolStringArray( "res://addons/simpleble/plugin.cfg" )
 
-[filesystem]
+[gui]
 
-import/fbx/enabled=false
+common/drop_mouse_on_gui_input_disabled=true
 
-[native_extensions]
+[physics]
 
-paths=["res://example.gdextension"]
+common/enable_pause_aware_picking=true
 
 [rendering]
 
-environment/defaults/default_environment="res://default_env.tres"
+environment/default_environment="res://default_env.tres"
