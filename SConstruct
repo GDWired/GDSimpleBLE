@@ -14,11 +14,16 @@ def sys_exec(args):
 def compile(base_dir):
     env.Append(CPPPATH=["{}/{}/export".format(base_dir, env["target"])])
     sys_exec(["mkdir", "{}/{}".format(base_dir, env["target"])])
-    if env["platform"] == "ios":
-        sys_exec(["cmake", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir), "-G", "Xcode", "-DCMAKE_TOOLCHAIN_FILE=../../ios.toolchain.cmake" , "-DPLATFORM=OS64"])
+    
+    if env["platform"] == "osx":
+        sys_exec(["cmake", "-DCMAKE_OSX_ARCHITECTURES=arm64;x86_64", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir)])
+    elif env["platform"] == "ios":
+        sys_exec(["cmake", "-DCMAKE_OSX_ARCHITECTURES=arm64", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir), "-GXcode", "-DCMAKE_SYSTEM_NAME=iOS"])
     else:
         sys_exec(["cmake", "-DCMAKE_BUILD_TYPE={}".format(cmake_target), "-B{}/{}".format(base_dir, env["target"]), "-S{}".format(base_dir)])
+    
     sys_exec(["cmake", "--build", "{}/{}".format(base_dir, env["target"]), "--config", cmake_target])
+    
     if env["platform"] == "windows" or env["platform"] == "ios":
         env.Append(LIBPATH=[env.Dir("{}/{}/lib/{}".format(simpleble_base, env["target"], cmake_target))])
     else:
