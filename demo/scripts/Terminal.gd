@@ -16,4 +16,5 @@ func writeln(text_to_write: String, color: Color = Color.white) -> void:
 func write(text_to_write: String, color: Color = Color.white) -> void:
 	# warning-ignore:return_value_discarded
 	call_deferred("append_bbcode", "[color=#" + color.to_html(false) + "]" + text_to_write + "[/color]")
+	#append_bbcode("[color=#" + color.to_html(false) + "]" + text_to_write + "[/color]")
 

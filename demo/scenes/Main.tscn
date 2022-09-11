@@ -104,16 +104,16 @@ size_flags_vertical = 3
 alignment = 1
 
 [node name="Scan" type="Button" parent="Controls/ConnectScan"]
-margin_right = 181.0
+margin_right = 144.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "Scan"
+text = "Start scan"
 
 [node name="Connect" type="Button" parent="Controls/ConnectScan"]
-margin_left = 185.0
-margin_right = 366.0
+margin_left = 148.0
+margin_right = 292.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -121,8 +121,8 @@ size_flags_vertical = 3
 text = "Connect"
 
 [node name="Infos" type="Button" parent="Controls/ConnectScan"]
-margin_left = 370.0
-margin_right = 551.0
+margin_left = 296.0
+margin_right = 440.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -130,11 +130,18 @@ size_flags_vertical = 3
 text = "Infos"
 
 [node name="Delete" type="Button" parent="Controls/ConnectScan"]
-margin_left = 555.0
-margin_right = 736.0
+margin_left = 444.0
+margin_right = 588.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 text = "Delete"
+
+[node name="Clear" type="Button" parent="Controls/ConnectScan"]
+margin_left = 592.0
+margin_right = 736.0
+margin_bottom = 40.0
+size_flags_horizontal = 3
+text = "Clear"
 
 [node name="Options" type="HBoxContainer" parent="Controls/ConnectScan"]
 margin_left = 740.0
@@ -248,6 +255,7 @@ script = ExtResource( 3 )
 [connection signal="pressed" from="Controls/ConnectScan/Connect" to="." method="_on_connect_pressed"]
 [connection signal="pressed" from="Controls/ConnectScan/Infos" to="." method="_on_infos_pressed"]
 [connection signal="pressed" from="Controls/ConnectScan/Delete" to="." method="_on_delete_pressed"]
+[connection signal="pressed" from="Controls/ConnectScan/Clear" to="." method="_on_clear_pressed"]
 [connection signal="toggled" from="Controls/Interactions/Notify" to="." method="_on_notify_toggled"]
 [connection signal="pressed" from="Controls/Interactions/Read" to="." method="_on_read_pressed"]
 [connection signal="pressed" from="Controls/Interactions/Send" to="." method="_on_send_pressed"]

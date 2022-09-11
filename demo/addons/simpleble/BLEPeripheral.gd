@@ -11,6 +11,8 @@ func _init(peripheral_address : String) -> void:
 
 func _notification(what : int) -> void:
 	if what == NOTIFICATION_PREDELETE:
+		if connected():
+			disconnection()
 		SimpleBLE.delete_peripheral(address)
 
 

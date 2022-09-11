@@ -12,6 +12,7 @@ onready var _terminal : Terminal = $Terminal
 
 onready var _connect : Button = $Controls/ConnectScan/Connect
 onready var _infos : Button = $Controls/ConnectScan/Infos
+onready var _scan : Button = $Controls/ConnectScan/Scan
 
 onready var _peripheral : LineEdit = $Controls/Connection/Peripheral
 onready var _service : LineEdit = $Controls/Connection/Service
@@ -59,8 +60,10 @@ func _print_peripheral(peripheral : BLEPeripheral, prompt : String, data : Strin
 func _on_scan_pressed() -> void:
 	if !_ble_adapter.scan_is_active():
 		_ble_adapter.start_scan()
+		_scan.text = "Stop scan"
 	else:
 		_ble_adapter.stop_scan()
+		_scan.text = "Start scan"
 
 
 # On connect button pressed
@@ -80,10 +83,11 @@ func _on_connect_pressed() -> void:
 func _on_delete_pressed() -> void:
 	var peripheral : BLEPeripheral = _ble_adapter.get_peripheral(_peripheral.text)
 	if peripheral != null:
-		if peripheral.connected():
-			# warning-ignore:return_value_discarded
-			peripheral.disconnection()
 		_ble_adapter.delete_peripheral(_peripheral.text)
+
+
+func _on_clear_pressed():
+	_ble_adapter.clear_peripherals()
 
 
 # On read button pressed

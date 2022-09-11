@@ -91,10 +91,14 @@ func delete_peripheral(address: String) -> void:
 		_peripherals.erase(address)
 
 
-func _exit_tree() -> void:
+func clear_peripherals() -> void:
 	for address in _peripherals:
 		_peripherals[address].free()
 	_peripherals.clear();
+
+
+func _exit_tree() -> void:
+	clear_peripherals()
 
 
 func _on_peripheral_connected(address: String) -> void:

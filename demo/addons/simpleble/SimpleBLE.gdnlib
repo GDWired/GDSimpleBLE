@@ -9,7 +9,7 @@ reloadable=true
 
 OSX.64="res://addons/simpleble/osx/libgdsimpleble.dylib"
 Windows.64="res://addons/simpleble/win64/libgdsimpleble.dll"
-X11.64="res://addons/simpleble/x11/libgdsimpleble.so"
+X11.64="res://addons/simpleble/linux/libgdsimpleble.so"
 
 [dependencies]
 
