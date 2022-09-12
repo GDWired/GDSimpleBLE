@@ -365,7 +365,7 @@ namespace godot {
 			 * @param p_status status to emit
 			 * @param p_caller caller
 			 */
-			void emit_peripheral_status(const BLEPeripheral* p_peripheral, const BLEUtils::Status& p_status, const String& p_caller);
+			void emit_peripheral_status(const BLEPeripheral* p_peripheral, const BLEUtils::Status& p_status, const String& p_what, const String& p_caller);
 
 			/**
 			 * Emit peripheral notify

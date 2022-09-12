@@ -34,8 +34,8 @@ void GDSimpleBLE::_register_methods() {
 	register_method("code_string", &GDSimpleBLE::get_code_string);
 	
 	// Error status signal
-	register_signal<GDSimpleBLE>((char *)"adapter_error_status_updated", "code", GODOT_VARIANT_TYPE_INT, "caller", GODOT_VARIANT_TYPE_STRING);
-	register_signal<GDSimpleBLE>((char *)"peripheral_error_status_updated", "address", GODOT_VARIANT_TYPE_STRING, "code", GODOT_VARIANT_TYPE_INT, "caller", GODOT_VARIANT_TYPE_STRING);
+	register_signal<GDSimpleBLE>((char *)"adapter_error_status_updated", "code", GODOT_VARIANT_TYPE_INT, "what", GODOT_VARIANT_TYPE_STRING, "caller", GODOT_VARIANT_TYPE_STRING);
+	register_signal<GDSimpleBLE>((char *)"peripheral_error_status_updated", "address", GODOT_VARIANT_TYPE_STRING, "code", GODOT_VARIANT_TYPE_INT, "what", GODOT_VARIANT_TYPE_STRING, "caller", GODOT_VARIANT_TYPE_STRING);
 
 	/**
 	 * Adapter
@@ -114,12 +114,12 @@ void GDSimpleBLE::_init() {
 
 BLEPeripheral* GDSimpleBLE::get_peripheral(const String& p_address, const String& p_caller) {
 	if (!m_adapter) {
-		emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, p_caller);
+		emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, "Not initialized", p_caller);
 		return nullptr;
 	}
 	auto l_peripheral = m_peripherals.find(p_address);
 	if (l_peripheral == m_peripherals.end()) {
-		emit_signal("peripheral_error_status_updated", p_address, BLEUtils::Status::NOT_FOUND, p_caller);
+		emit_signal("peripheral_error_status_updated", p_address, BLEUtils::Status::NOT_FOUND, "Not found", p_caller);
 		return nullptr;
 	}
 	return l_peripheral->second;
@@ -194,8 +194,8 @@ void GDSimpleBLE::create_peripheral(SimpleBLE::Peripheral& p_peripheral, const S
 //	Emit handlers
 //###############################################################
 
-void GDSimpleBLE::emit_peripheral_status(const BLEPeripheral* p_peripheral, const BLEUtils::Status& p_status, const String& p_caller) {
-	emit_signal("peripheral_error_status_updated", p_peripheral->get_address(), p_status, p_caller);
+void GDSimpleBLE::emit_peripheral_status(const BLEPeripheral* p_peripheral, const BLEUtils::Status& p_status, const String& p_what, const String& p_caller) {
+	emit_signal("peripheral_error_status_updated", p_peripheral->get_address(), p_status, p_what, p_caller);
 }
 
 void GDSimpleBLE::emit_peripheral_notify(const String& p_address, const PoolByteArray& p_payload) {
@@ -280,7 +280,7 @@ bool GDSimpleBLE::init(const String p_address) {
 				emit_signal("scan_stopped");
 			});
 	} catch (std::exception& l_exception) {
-		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(__func__));
+		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 	return true;
@@ -289,13 +289,13 @@ bool GDSimpleBLE::init(const String p_address) {
 bool GDSimpleBLE::scan_start() {
 	try {
 		if (!m_adapter) {
-			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, String(__func__));
+			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, "Not initialized", String(__func__));
 			return false;
 		}
 		m_adapter->scan_start();
 		return true;
 	} catch (std::exception& l_exception) {
-		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(__func__));
+		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -303,13 +303,13 @@ bool GDSimpleBLE::scan_start() {
 bool GDSimpleBLE::scan_stop() {
 	try {
 		if (!m_adapter) {
-			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, String(__func__));
+			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, "Not initialized", String(__func__));
 			return false;
 		}
 		m_adapter->scan_stop();
 		return true;
 	} catch (std::exception& l_exception) {
-		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(__func__));
+		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -317,13 +317,13 @@ bool GDSimpleBLE::scan_stop() {
 bool GDSimpleBLE::scan_for(const int p_timeout_ms) {
 	try {
 		if (!m_adapter) {
-			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, String(__func__));
+			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, "Not initialized", String(__func__));
 			return false;
 		}
 		m_adapter->scan_for(p_timeout_ms);
 		return true;
 	} catch (std::exception& l_exception) {
-		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(__func__));
+		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -343,12 +343,12 @@ void GDSimpleBLE::delete_peripheral(const String p_address) {
 Variant GDSimpleBLE::get_identifier() {
 	try {
 		if (!m_adapter) {
-			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, String(__func__));
+			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, "Not initialized", String(__func__));
 			return Variant();
 		}
 		return String(m_adapter->identifier().c_str());
 	} catch (std::exception& l_exception) {
-		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(__func__));
+		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return Variant();
 	}
 }
@@ -356,12 +356,12 @@ Variant GDSimpleBLE::get_identifier() {
 Variant GDSimpleBLE::get_address() {
 	try {
 		if (!m_adapter) {
-			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, String(__func__));
+			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, "Not initialized", String(__func__));
 			return Variant();
 		}
 		return String(m_adapter->address().c_str());
 	} catch (std::exception& l_exception) {
-		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(__func__));
+		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return Variant();
 	}
 }
@@ -369,12 +369,12 @@ Variant GDSimpleBLE::get_address() {
 Variant GDSimpleBLE::get_scan_is_active() {
 	try {
 		if (!m_adapter) {
-			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, String(__func__));
+			emit_signal("adapter_error_status_updated", BLEUtils::Status::NOT_INITIALIZED, "Not initialized", String(__func__));
 			return false;
 		}
 		return m_adapter->scan_is_active();
 	} catch (std::exception& l_exception) {
-		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(__func__));
+		emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return Variant();
 	}
 }
@@ -572,7 +572,7 @@ Array GDSimpleBLE::get_adapters() {
 			l_return.push_back(String(l_adapter->address().c_str()));
 			++l_adapter;
 		} catch (std::exception& l_exception) {
-			emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(__func__));
+			emit_signal("adapter_error_status_updated", BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		}
 	}
 

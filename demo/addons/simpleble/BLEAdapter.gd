@@ -3,8 +3,8 @@ class_name BLEAdapter
 
 
 # General signals
-signal adapter_error_status_updated(code, caller)
-signal peripheral_error_status_updated(peripheral, code, caller)
+signal adapter_error_status_updated(code, what, caller)
+signal peripheral_error_status_updated(peripheral, code, what, caller)
 
 # Adapter related signals
 signal scan_started
@@ -154,14 +154,14 @@ func _on_peripheral_indicated(address: String, payload : PoolByteArray) -> void:
 		printerr("Peripheral not found (_on_peripheral_indicated)")
 
 
-func _on_adapter_error_status_updated(code: int, caller: String) -> void:
-	emit_signal("adapter_error_status_updated", code, caller)
+func _on_adapter_error_status_updated(code: int, what: String, caller: String) -> void:
+	emit_signal("adapter_error_status_updated", code, what, caller)
 
 
-func _on_peripheral_error_status_updated(address: String, code: int, caller: String) -> void:
+func _on_peripheral_error_status_updated(address: String, code: int, what: String, caller: String) -> void:
 	var peripheral = get_peripheral(address)
 	if peripheral:
-		emit_signal("peripheral_error_status_updated", peripheral, code, caller)
+		emit_signal("peripheral_error_status_updated", peripheral, code, what, caller)
 	else:
 		printerr("Peripheral not found (_on_peripheral_error_status_updated)")
 

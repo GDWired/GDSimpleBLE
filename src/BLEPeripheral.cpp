@@ -117,7 +117,7 @@ bool BLEPeripheral::connect_peripheral() {
 		return true;
 
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -128,7 +128,7 @@ bool BLEPeripheral::disconnect_peripheral() {
 		return true;
 
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -139,7 +139,7 @@ bool BLEPeripheral::unpair_peripheral() {
 		return true;
 
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -153,7 +153,7 @@ Variant BLEPeripheral::read(const String p_service, const String p_characteristi
 		const auto& l_string_data = m_peripheral.read(p_service.utf8().get_data(), p_characteristic.utf8().get_data());
 		return BLEUtils::string_to_byte_array(l_string_data);
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return Variant();
 	}
 }
@@ -163,7 +163,7 @@ Variant BLEPeripheral::read_descriptor(const String p_service, const String p_ch
 		const auto& l_string_data = m_peripheral.read(p_service.utf8().get_data(), p_characteristic.utf8().get_data(), p_descriptor.utf8().get_data());
 		return BLEUtils::string_to_byte_array(l_string_data);
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return Variant();
 	}
 }
@@ -173,7 +173,7 @@ bool BLEPeripheral::write_request(const String p_service, const String p_charact
 		m_peripheral.write_request(p_service.utf8().get_data(), p_characteristic.utf8().get_data(), p_data.utf8().get_data());
 		return true;
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -183,7 +183,7 @@ bool BLEPeripheral::write_command(const String p_service, const String p_charact
 		m_peripheral.write_command(p_service.utf8().get_data(), p_characteristic.utf8().get_data(), p_data.utf8().get_data());
 		return true;
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -193,7 +193,7 @@ bool BLEPeripheral::write_descriptor(const String p_service, const String p_char
 		m_peripheral.write(p_service.utf8().get_data(), p_characteristic.utf8().get_data(), p_descriptor.utf8().get_data(), p_data.utf8().get_data());
 		return true;
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -207,7 +207,7 @@ bool BLEPeripheral::notify(const String p_service, const String p_characteristic
 			});
 		return true;
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -221,7 +221,7 @@ bool BLEPeripheral::indicate(const String p_service, const String p_characterist
 			});
 		return true;
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }
@@ -231,7 +231,7 @@ bool BLEPeripheral::unsubscribe(const String p_service, const String p_character
 		m_peripheral.unsubscribe(p_service.utf8().get_data(), p_characteristic.utf8().get_data());
 		return true;
 	} catch (std::exception& l_exception) {
-		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(__func__));
+		m_simple_ble_wrapper->emit_peripheral_status(this, BLEUtils::get_status(l_exception), String(l_exception.what()), String(__func__));
 		return false;
 	}
 }

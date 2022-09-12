@@ -33,6 +33,7 @@ onready var _advance : CheckButton = $Controls/ConnectScan/Options/Advance
 func _ready() -> void:
 	var adapters = _simple_ble.adapters()
 	_ble_adapter.init(adapters[0])
+	_terminal.writeln("Using adapter: " + _ble_adapter.identifier() + " [" + _ble_adapter.address() + "]")
 
 
 # Write one line in the terminal
@@ -189,11 +190,11 @@ func _on_ble_adapter_peripheral_updated(peripheral : BLEPeripheral) -> void:
 
 
 # On peripheral error status updated
-func _on_ble_adapter_peripheral_error_status_updated(peripheral: BLEPeripheral, code: int, _caller: String) -> void:
+func _on_ble_adapter_peripheral_error_status_updated(peripheral: BLEPeripheral, code: int, what: String, _caller: String) -> void:
 	_print_peripheral(peripheral, "Error", _simple_ble.code_string(code))
-
+	_terminal.writeln("Peripheral " + "(error code: " + str(code) + ") " + what, Color.red)
 
 # On adapter error status updated
-func _on_ble_adapter_adapter_error_status_updated(code: int,  _caller: String) -> void:
-	_terminal.writeln("Adapter " + " (" + _simple_ble.code_string(code) + ") ", Color.red)
+func _on_ble_adapter_adapter_error_status_updated(code: int, what: String,  _caller: String) -> void:
+	_terminal.writeln("Adapter " + " (error code" + str(code) + ") " + what, Color.red)
 
