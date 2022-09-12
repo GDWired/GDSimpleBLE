@@ -1,5 +1,5 @@
 # GDSimpleBLE
-Implementation of SimpleBLE (https://github.com/OpenBluetoothToolbox/SimpleBLE) as a GDNative plugin for Godot 3.5.
+Implementation of SimpleBLE (https://github.com/OpenBluetoothToolbox/SimpleBLE) as a GDNative plugin for Godot 3.5 (WIP).
 
 The project works on macOS (good), Linux (ok) and Windows (runtime exception).
 Exports from Godot work for all platform except for iOS (WIP), SimpleBLE is not yet available for Android. 
@@ -14,7 +14,7 @@ To compile it:
  - Run `scons` on the root folder.
  - Start Godot3.5 and open the project in the `demo` folder
  
- ![image](https://user-images.githubusercontent.com/4105962/187994856-678642c8-8a94-4c1e-8535-ef5df80c1b77.png)
+![Capture](https://user-images.githubusercontent.com/4105962/189644783-96f48eac-1df0-4181-9b47-292d69fd60d8.PNG)
 
 First line:
  - Scan: start/stop the scan
