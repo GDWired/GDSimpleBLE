@@ -1,10 +1,9 @@
 # GDSimpleBLE
-Implementation of SimpleBLE (https://github.com/OpenBluetoothToolbox/SimpleBLE) as a GDExtension for Godot4.
+Implementation of SimpleBLE (https://github.com/OpenBluetoothToolbox/SimpleBLE) as a GDNative plugin for Godot 3.5.
 
-Be aware that Godot4 is in alpha and the API is not stable.
-You can find a plugin for Godot3.5, while waiting for the porting of GDSimpleBLE on 3.5, using a deprecated NativeBLE library (https://github.com/jferdelyi/GDNativeBLE) but I don't maintain this project anymore.
-
-The project works on macOS, Linux and Windows but exports from Godot don't seem to work well... it works for Linux and Windows only in debug and doesn't work at all on macOS and iOS (SimpleBLE is not yet available for Android). The executables are in the `exports` folder (Linux and Windows).
+The project works on macOS (good), Linux (ok) and Windows (runtime exception).
+Exports from Godot work for all platform except for iOS (WIP), SimpleBLE is not yet available for Android. 
+The demo executables are in the `exports` folder.
 
 The Godot4 version is on pause in order to concentrate on the Godot3.5 version.
 
@@ -13,7 +12,7 @@ To compile it:
  - Install cmake
  - Install the Godot dependencies (https://docs.godotengine.org/en/stable/development/compiling/index.html)
  - Run `scons` on the root folder.
- - Start Godot4 and open the project in the `demo` folder
+ - Start Godot3.5 and open the project in the `demo` folder
  
  ![image](https://user-images.githubusercontent.com/4105962/187994856-678642c8-8a94-4c1e-8535-ef5df80c1b77.png)
 
