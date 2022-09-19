@@ -5,7 +5,7 @@ The project works on macOS (good), Linux (ok) and Windows (runtime exception).
 Exports from Godot work for all platform except for iOS (WIP), SimpleBLE is not yet available for Android. 
 The demo executables are in the `exports` folder.
 
-The Godot4 version is on pause in order to concentrate on the Godot3.5 version.
+The Godot4 related work are in the branch godot4 (WIP).
 
 To compile it:
  - Run `git clone --recurse-submodules https://github.com/jferdelyi/GDSimpleBLE.git`
