@@ -78,7 +78,7 @@ const BLEUtils::Status BLEUtils::get_status(std::exception& p_exception) {
 	return BLEUtils::Status::UNKNOWN;
 }
 
-String BLEUtils::get_code_string(const int p_code) {
+String BLEUtils::get_status_string(const Status& p_code) {
 	switch (p_code) {
 		case NOT_INITIALIZED:
 			return "Not initialized";
@@ -100,6 +100,19 @@ String BLEUtils::get_code_string(const int p_code) {
 			return "Internal error (WinRT or CoreBluetooh)";
 		case NOT_FOUND:
 			return "Not found";
+		default:
+			return "Unknown";
+	}
+}
+
+String BLEUtils::get_status_level_string(const StatusLevel& p_level) {
+	switch (p_level) {
+		case INFO:
+			return "Info";
+		case WARNING:
+			return "Warning";
+		case ERROR:
+			return "Error";
 		default:
 			return "Unknown";
 	}

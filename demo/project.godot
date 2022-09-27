@@ -12,17 +12,17 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "BLEAdapter",
 "language": "GDScript",
-"path": "res://addons/simpleble/BLEAdapter.gd"
+"path": "res://addons/simpleble/scripts/BLEAdapter.gd"
 }, {
 "base": "Node",
 "class": "BLEPeripheral",
 "language": "GDScript",
-"path": "res://addons/simpleble/BLEPeripheral.gd"
+"path": "res://addons/simpleble/scripts/BLEPeripheral.gd"
 }, {
 "base": "Node",
 "class": "GDSimpleBLE",
 "language": "NativeScript",
-"path": "res://addons/simpleble/SimpleBLE.gdns"
+"path": "res://addons/simpleble/scripts/SimpleBLE.gdns"
 }, {
 "base": "RichTextLabel",
 "class": "Terminal",
@@ -47,7 +47,14 @@ config/windows_native_icon="res://GDSimpleBLE.ico"
 
 [autoload]
 
-SimpleBLE="*res://addons/simpleble/SimpleBLE.tscn"
+SimpleBLE="*res://addons/simpleble/scripts/SimpleBLE.tscn"
+BLEUtils="*res://addons/simpleble/scripts/BLEUtils.tscn"
+
+[display]
+
+window/size/width=1280
+window/size/height=720
+window/size/resizable=false
 
 [editor_plugins]
 

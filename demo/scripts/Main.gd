@@ -6,7 +6,7 @@ extends Control
 
 
 # Handlers
-onready var _simple_ble = SimpleBLE
+onready var _ble_utils = BLEUtils
 onready var _ble_adapter : BLEAdapter = $BLEAdapter
 onready var _terminal : Terminal = $Terminal
 
@@ -31,9 +31,11 @@ onready var _advance : CheckButton = $Controls/ConnectScan/Options/Advance
 
 # Init adpater using the first one
 func _ready() -> void:
-	var adapters = _simple_ble.adapters()
+	var adapters = _ble_utils.adapters()
 	_ble_adapter.init(adapters[0])
-	_terminal.writeln("Using adapter: " + _ble_adapter.identifier() + " [" + _ble_adapter.address() + "]")
+	_terminal.write("Using adapter: ", Color.purple)
+	_terminal.write(_ble_adapter.identifier() + " ")
+	_terminal.writeln(_ble_adapter.address(), Color.cornflower)
 
 
 # Write one line in the terminal
@@ -43,15 +45,15 @@ func _print_line(prompt : String, data : String) -> void:
 
 
 # Write the peripheral in the terminal
-func _print_peripheral(peripheral : BLEPeripheral, prompt : String, data : String = "") -> void:
+func _print_peripheral(peripheral : BLEPeripheral, prompt : String, data : String = "", color : Color = Color.green) -> void:
 	var is_connectable_string = "[Connectable] " if peripheral.connectable() else "[Not connectable] "
 	_terminal.write(prompt + ": ", Color.purple)
-	_terminal.write(peripheral.identifier() + " " + str(peripheral.rssi()) + "dBm " + is_connectable_string + " ")
+	_terminal.write(peripheral.identifier() + " " + str(peripheral.rssi()) + "dBm " + is_connectable_string + "")
 	if data != "":
-		_terminal.write(peripheral.address, Color.green)
-		_terminal.writeln(" => " + data, Color.tomato)
+		_terminal.write(peripheral.address, Color.cornflower)
+		_terminal.writeln(" => " + data, color)
 	else:
-		_terminal.writeln(peripheral.address, Color.green)
+		_terminal.writeln(peripheral.address, Color.cornflower)
 
 
 ## HMI callbacks
@@ -89,6 +91,7 @@ func _on_delete_pressed() -> void:
 
 func _on_clear_pressed():
 	_ble_adapter.clear_peripherals()
+	_terminal.default()
 
 
 # On read button pressed
@@ -115,7 +118,7 @@ func _on_infos_pressed() -> void:
 	else:
 		for data in peripheral.manufacturer_data():
 			var bytes : PoolByteArray = peripheral.manufacturer_data()[data];
-			_print_line("Manufacturer data", _simple_ble.company_name(data) + " (0x" + bytes.hex_encode() + ")")
+			_print_line("Manufacturer data", _ble_utils.company_name(data) + " (0x" + bytes.hex_encode() + ")")
 		for service in peripheral.services():
 			_print_line("Service", service)
 			for caracteristic in peripheral.services()[service]:
@@ -190,11 +193,21 @@ func _on_ble_adapter_peripheral_updated(peripheral : BLEPeripheral) -> void:
 
 
 # On peripheral error status updated
-func _on_ble_adapter_peripheral_error_status_updated(peripheral: BLEPeripheral, code: int, what: String, _caller: String) -> void:
-	_print_peripheral(peripheral, "Error", _simple_ble.code_string(code))
-	_terminal.writeln("Peripheral " + "(error code: " + str(code) + ") " + what, Color.red)
+func _on_ble_adapter_peripheral_status_updated(peripheral: BLEPeripheral, _code: int, what: String, level: int) -> void:
+	if level == _ble_utils.ERROR:
+		_print_peripheral(peripheral, _ble_utils.status_level_string(level), what, Color.red)
+	elif level == _ble_utils.WARNING:
+		_print_peripheral(peripheral, _ble_utils.status_level_string(level), what, Color.yellow)
+	else:
+		_print_peripheral(peripheral, _ble_utils.status_level_string(level), what, Color.blue)
+
 
 # On adapter error status updated
-func _on_ble_adapter_adapter_error_status_updated(code: int, what: String,  _caller: String) -> void:
-	_terminal.writeln("Adapter " + " (error code" + str(code) + ") " + what, Color.red)
+func _on_ble_adapter_status_updated(code: int, what: String, level: int) -> void:
+	if level == _ble_utils.ERROR:
+		_terminal.writeln("Adapter " + "(error code: " + str(code) + ") " + what, Color.red)
+	elif level == _ble_utils.WARNING:
+		_terminal.writeln("Adapter " + "(error code: " + str(code) + ") " + what, Color.yellow)
+	else:
+		_terminal.writeln("Adapter " + "(error code: " + str(code) + ") " + what, Color.blue)
 

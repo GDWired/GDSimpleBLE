@@ -2,7 +2,7 @@
 
 [ext_resource path="res://scripts/Main.gd" type="Script" id=1]
 [ext_resource path="res://scripts/Terminal.gd" type="Script" id=2]
-[ext_resource path="res://addons/simpleble/BLEAdapter.gd" type="Script" id=3]
+[ext_resource path="res://addons/simpleble/scripts/BLEAdapter.gd" type="Script" id=3]
 
 [sub_resource type="Theme" id=5]
 Button/styles/disabled = null
@@ -97,14 +97,14 @@ size_flags_horizontal = 3
 size_flags_vertical = 3
 
 [node name="ConnectScan" type="HBoxContainer" parent="Controls"]
-margin_right = 1004.0
+margin_right = 1260.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
 [node name="Scan" type="Button" parent="Controls/ConnectScan"]
-margin_right = 144.0
+margin_right = 245.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -112,8 +112,8 @@ size_flags_vertical = 3
 text = "Start scan"
 
 [node name="Connect" type="Button" parent="Controls/ConnectScan"]
-margin_left = 148.0
-margin_right = 292.0
+margin_left = 249.0
+margin_right = 494.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -121,8 +121,8 @@ size_flags_vertical = 3
 text = "Connect"
 
 [node name="Infos" type="Button" parent="Controls/ConnectScan"]
-margin_left = 296.0
-margin_right = 440.0
+margin_left = 498.0
+margin_right = 743.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -130,22 +130,23 @@ size_flags_vertical = 3
 text = "Infos"
 
 [node name="Delete" type="Button" parent="Controls/ConnectScan"]
-margin_left = 444.0
-margin_right = 588.0
+visible = false
+margin_left = 597.0
+margin_right = 792.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 text = "Delete"
 
 [node name="Clear" type="Button" parent="Controls/ConnectScan"]
-margin_left = 592.0
-margin_right = 736.0
+margin_left = 747.0
+margin_right = 992.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 text = "Clear"
 
 [node name="Options" type="HBoxContainer" parent="Controls/ConnectScan"]
-margin_left = 740.0
-margin_right = 1004.0
+margin_left = 996.0
+margin_right = 1260.0
 margin_bottom = 40.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
@@ -166,14 +167,14 @@ text = "Advance"
 
 [node name="Connection" type="HBoxContainer" parent="Controls"]
 margin_top = 44.0
-margin_right = 1004.0
+margin_right = 1260.0
 margin_bottom = 84.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
 [node name="Peripheral" type="LineEdit" parent="Controls/Connection"]
-margin_right = 332.0
+margin_right = 417.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -182,8 +183,8 @@ text = "823A7171-DD98-45E8-C0CD-5D272E51A0AE"
 placeholder_text = "Peripheral"
 
 [node name="Service" type="LineEdit" parent="Controls/Connection"]
-margin_left = 336.0
-margin_right = 668.0
+margin_left = 421.0
+margin_right = 838.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -192,8 +193,8 @@ text = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
 placeholder_text = "Service"
 
 [node name="Characteristic" type="LineEdit" parent="Controls/Connection"]
-margin_left = 672.0
-margin_right = 1004.0
+margin_left = 842.0
+margin_right = 1260.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -203,14 +204,14 @@ placeholder_text = "Characteristic"
 
 [node name="Interactions" type="HBoxContainer" parent="Controls"]
 margin_top = 88.0
-margin_right = 1004.0
+margin_right = 1260.0
 margin_bottom = 128.0
 size_flags_horizontal = 3
 size_flags_vertical = 3
 alignment = 1
 
 [node name="Notify" type="Button" parent="Controls/Interactions"]
-margin_right = 248.0
+margin_right = 312.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -220,8 +221,8 @@ toggle_mode = true
 text = "Notify"
 
 [node name="Read" type="Button" parent="Controls/Interactions"]
-margin_left = 252.0
-margin_right = 500.0
+margin_left = 316.0
+margin_right = 628.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -230,8 +231,8 @@ disabled = true
 text = "Read"
 
 [node name="Send" type="Button" parent="Controls/Interactions"]
-margin_left = 504.0
-margin_right = 752.0
+margin_left = 632.0
+margin_right = 944.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -240,8 +241,8 @@ disabled = true
 text = "Send"
 
 [node name="Data" type="LineEdit" parent="Controls/Interactions"]
-margin_left = 756.0
-margin_right = 1004.0
+margin_left = 948.0
+margin_right = 1260.0
 margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
@@ -259,13 +260,13 @@ script = ExtResource( 3 )
 [connection signal="toggled" from="Controls/Interactions/Notify" to="." method="_on_notify_toggled"]
 [connection signal="pressed" from="Controls/Interactions/Read" to="." method="_on_read_pressed"]
 [connection signal="pressed" from="Controls/Interactions/Send" to="." method="_on_send_pressed"]
-[connection signal="adapter_error_status_updated" from="BLEAdapter" to="." method="_on_ble_adapter_adapter_error_status_updated"]
+[connection signal="adapter_status_updated" from="BLEAdapter" to="." method="_on_ble_adapter_status_updated"]
 [connection signal="peripheral_connected" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_connected"]
 [connection signal="peripheral_disconnected" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_disconnected"]
-[connection signal="peripheral_error_status_updated" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_error_status_updated"]
 [connection signal="peripheral_found" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_found"]
 [connection signal="peripheral_indicated" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_indicated"]
 [connection signal="peripheral_notified" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_notified"]
+[connection signal="peripheral_status_updated" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_status_updated"]
 [connection signal="peripheral_updated" from="BLEAdapter" to="." method="_on_ble_adapter_peripheral_updated"]
 [connection signal="scan_started" from="BLEAdapter" to="." method="_on_ble_adapter_scan_started"]
 [connection signal="scan_stopped" from="BLEAdapter" to="." method="_on_ble_adapter_scan_stopped"]

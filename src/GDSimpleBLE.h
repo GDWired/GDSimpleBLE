@@ -41,17 +41,16 @@ namespace godot {
 			/**
 			 * Check used for peripheral methods (emit signal)
 			 * @param p_address the peripheral to check
-			 * @param p_caller caller for debug
 			 * @return the peripheral
 			 */
-			BLEPeripheral* get_peripheral(const String& p_address, const String& p_caller);
+			BLEPeripheral* get_peripheral(const String& p_address);
 
 			/**
 			 * Check used for peripheral methods (does not emit signal)
 			 * @param p_address the peripheral to check
 			 * @return the peripheral
 			 */
-			BLEPeripheral* get_peripheral(const String& p_address);
+			BLEPeripheral* internal_get_peripheral(const String& p_address);
 
 			/**
 			 * Create peripheral wrapper
@@ -323,10 +322,16 @@ namespace godot {
 			String get_company_name(const int p_company_code);
 			
 			/**
-			 * Get code as a string
-			 * @return company name
+			 * Get status as a string
+			 * @return status string
 			 */
-			String get_code_string(const int p_code);
+			String get_status_string(const int p_code);
+
+			/**
+			 * Get status level as a string
+			 * @return status level string
+			 */
+			String get_status_level_string(const int p_code);
 
 		// Public methods
 		public:
@@ -360,12 +365,61 @@ namespace godot {
 			//###############################################################
 
 			/**
+			 * Emit adapter status
+			 * @param p_status status to emit
+			 * @param p_level error level
+			 */
+			void emit_adapter_status(const BLEUtils::Status& p_status, const String& p_what, const BLEUtils::StatusLevel& p_level);
+			
+			/**
+			 * Emit peripheral status (wrapper for exceptions)
+			 * @param p_address address of the peripheral
+			 * @param p_exception exception
+			 * @param p_level error level (default: ERROR)
+			 */
+			void emit_adapter_status(std::exception& p_exception, const BLEUtils::StatusLevel& p_level = BLEUtils::StatusLevel::ERROR);
+			
+			/**
+			 * Emit peripheral status (wrapper for status)
+			 * @param p_address address of the peripheral
+			 * @param p_status status to emit
+			 * @param p_level error level (default: WARNING)
+			 */
+			void emit_adapter_status(const BLEUtils::Status& p_status, const BLEUtils::StatusLevel& p_level = BLEUtils::StatusLevel::WARNING);
+			
+			/**
+			 * Emit scan stopped
+			 */
+			void emit_scan_stopped();
+
+			/**
+			 * Emit scan started
+			 */
+			void emit_scan_started();
+
+			/**
 			 * Emit peripheral status
 			 * @param p_address address of the peripheral
 			 * @param p_status status to emit
-			 * @param p_caller caller
+			 * @param p_level error level
 			 */
-			void emit_peripheral_status(const BLEPeripheral* p_peripheral, const BLEUtils::Status& p_status, const String& p_what, const String& p_caller);
+			void emit_peripheral_status(const String& p_address, const BLEUtils::Status& p_status, const String& p_what, const BLEUtils::StatusLevel& p_level);
+			
+			/**
+			 * Emit peripheral status (wrapper for exceptions)
+			 * @param p_address address of the peripheral
+			 * @param p_exception exception
+			 * @param p_level error level (default: ERROR)
+			 */
+			void emit_peripheral_status(const String& p_address, std::exception& p_exception, const BLEUtils::StatusLevel& p_level = BLEUtils::StatusLevel::ERROR);
+
+			/**
+			 * Emit peripheral status (wrapper for status)
+			 * @param p_address address of the peripheral
+			 * @param p_status status to emit
+			 * @param p_level error level (default: WARNING)
+			 */
+			void emit_peripheral_status(const String& p_address, const BLEUtils::Status& p_status, const BLEUtils::StatusLevel& p_level = BLEUtils::StatusLevel::WARNING);
 
 			/**
 			 * Emit peripheral notify
@@ -380,6 +434,30 @@ namespace godot {
 			 * @param p_payload the payload
 			 */
 			void emit_peripheral_indicate(const String& p_address, const PoolByteArray& p_payload);
+
+			/**
+			 * Emit peripheral found
+			 * @param p_address the peripheral address
+			 */
+			void emit_peripheral_found(const String& p_address);
+
+			/**
+			 * Emit peripheral disconnected
+			 * @param p_address the peripheral address
+			 */
+			void emit_peripheral_disconnected(const String& p_address);
+
+			/**
+			 * Emit peripheral connected
+			 * @param p_address the peripheral address
+			 */
+			void emit_peripheral_connected(const String& p_address);
+
+			/**
+			 * Emit peripheral updated
+			 * @param p_address the peripheral address
+			 */
+			void emit_peripheral_updated(const String& p_address);
 	}; 
 
 }

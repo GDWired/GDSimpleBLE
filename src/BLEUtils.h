@@ -32,7 +32,18 @@ class BLEUtils {
 			OPERATION_FAILED,
 			INTERNAL_ERROR,
 			NOT_FOUND,
+			ALREADY_CONNECTED,
+			ALREADY_DISCONNECTED,
 			UNKNOWN
+		};
+
+		/**
+		 * Adpaters and peripherals status level
+		 */
+		enum StatusLevel {
+			INFO,
+			WARNING,
+			ERROR
 		};
 
 		/**
@@ -69,11 +80,18 @@ class BLEUtils {
 		static const Status get_status(std::exception& p_exception);
 				
 		/**
-		 * Get string code form the code
-		 * @param p_code code
-		 * @return string code
+		 * Get string form the status
+		 * @param p_code status
+		 * @return string status
 		 */
-		static String get_code_string(const int p_code);
+		static String get_status_string(const Status& p_code);
+
+		/**
+		 * Get string form the status level
+		 * @param p_level status level
+		 * @return string status level
+		 */
+		static String get_status_level_string(const StatusLevel& p_level);
 
 		/**
 		 * Get company name string form the decimal
