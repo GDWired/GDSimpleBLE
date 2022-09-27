@@ -14,12 +14,13 @@ To compile it:
  - Run `scons` on the root folder.
  - Start Godot3.5 and open the project in the `demo` folder
  
-![Capture](https://user-images.githubusercontent.com/4105962/189644783-96f48eac-1df0-4181-9b47-292d69fd60d8.PNG)
+ <img width="1392" alt="Capture d’écran 2022-09-27 à 15 30 58" src="https://user-images.githubusercontent.com/4105962/192540130-792745f9-4c7f-4a6b-b3df-1eef52a9d986.png">
 
 First line:
  - Scan: start/stop the scan
  - Connect/Disconnect: connect or disconnect the device (the address used is the first one on the left).
  - Infos: get information about the device, manufacturer data and list of services -> characteristics -> descriptors (the address used is the first address on the left).
+ - Clear: clear the terminal and delete all peripherals
  - Update: enable/disable the display of updates
  - Advance: enable/disable the display of devices without identifiers and/or devices that cannot be connected
  
