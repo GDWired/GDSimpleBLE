@@ -42,8 +42,6 @@ config/name="GDSimpleBLE Demo"
 run/main_scene="res://scenes/Main.tscn"
 boot_splash/image="res://GDSimpleBLE.png"
 config/icon="res://GDSimpleBLE.png"
-config/macos_native_icon="res://GDSimpleBLE.icns"
-config/windows_native_icon="res://GDSimpleBLE.ico"
 
 [autoload]
 
