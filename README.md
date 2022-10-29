@@ -1,4 +1,7 @@
-# GDSimpleBLE
+<p align="center"><img src="https://user-images.githubusercontent.com/4105962/198850536-6db10ab6-6cc8-44f1-9307-832cb9a353d4.png" width="256"></p>
+
+# <p align="center">GDSimpleBLE (Godot 3.5)</p>
+
 Implementation of SimpleBLE (https://github.com/OpenBluetoothToolbox/SimpleBLE) as a GDNative plugin for Godot 3.5 (WIP).
 
 The project works on macOS (good), Linux (ok) and Windows (runtime exception).
