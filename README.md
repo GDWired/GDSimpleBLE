@@ -14,6 +14,7 @@ To compile it:
  - Run `git clone --recurse-submodules https://github.com/jferdelyi/GDSimpleBLE.git`
  - Install cmake
  - Install the Godot dependencies (https://docs.godotengine.org/en/stable/development/compiling/index.html)
+ - [Linux] Install lib dbus devel (sudo apt install libdbus-1-dev or equivalent)
  - Run `scons` on the root folder.
  - Start Godot3.5 and open the project in the `demo` folder
  

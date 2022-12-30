@@ -92,5 +92,5 @@ else:
 
     # Create lib
     sources = Glob("src/*.cpp")
-    library = env.SharedLibrary("demo/addons/simpleble/{}/libgdsimpleble{}".format(env['platform'], env["SHLIBSUFFIX"]), source=sources)
+    library = env.SharedLibrary("demo/addons/GDSimpleBLE/{}/libgdsimpleble{}".format(env['platform'], env["SHLIBSUFFIX"]), source=sources)
     Default(library)

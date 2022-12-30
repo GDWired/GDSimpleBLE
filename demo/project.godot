@@ -12,17 +12,17 @@ _global_script_classes=[ {
 "base": "Node",
 "class": "BLEAdapter",
 "language": "GDScript",
-"path": "res://addons/simpleble/scripts/BLEAdapter.gd"
+"path": "res://addons/GDSimpleBLE/scripts/BLEAdapter.gd"
 }, {
 "base": "Node",
 "class": "BLEPeripheral",
 "language": "GDScript",
-"path": "res://addons/simpleble/scripts/BLEPeripheral.gd"
+"path": "res://addons/GDSimpleBLE/scripts/BLEPeripheral.gd"
 }, {
 "base": "Node",
 "class": "GDSimpleBLE",
 "language": "NativeScript",
-"path": "res://addons/simpleble/scripts/SimpleBLE.gdns"
+"path": "res://addons/GDSimpleBLE/scripts/SimpleBLE.gdns"
 }, {
 "base": "RichTextLabel",
 "class": "Terminal",
@@ -45,8 +45,8 @@ config/icon="res://GDSimpleBLE.png"
 
 [autoload]
 
-SimpleBLE="*res://addons/simpleble/scripts/SimpleBLE.tscn"
-BLEUtils="*res://addons/simpleble/scripts/BLEUtils.tscn"
+SimpleBLE="*res://addons/GDSimpleBLE/scripts/SimpleBLE.tscn"
+BLEUtils="*res://addons/GDSimpleBLE/scripts/BLEUtils.tscn"
 
 [display]
 
@@ -56,7 +56,7 @@ window/size/resizable=false
 
 [editor_plugins]
 
-enabled=PoolStringArray( "res://addons/simpleble/plugin.cfg" )
+enabled=PoolStringArray( "res://addons/GDSimpleBLE/plugin.cfg" )
 
 [gui]
 
