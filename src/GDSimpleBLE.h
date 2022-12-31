@@ -101,19 +101,19 @@ namespace godot {
 
 			/**
 			 * Get adapter identifier
-			 * @return adapter identifier
+			 * @return adapter identifier (or null and emit signal if something wrong)
 			 */
 			Variant get_identifier();
 
 			/**
 			 * Get adapter address
-			 * @return adapter address
+			 * @return adapter address (or null and emit signal if something wrong)
 			 */
 			Variant get_address();
 
 			/**
 			 * True is the scan is active
-			 * @return true if active
+			 * @return true if active (or null and emit signal if something wrong)
 			 */
 			Variant get_scan_is_active();
 
@@ -151,7 +151,7 @@ namespace godot {
 			 * @param p_address the peripheral address
 			 * @param p_service service address
 			 * @param p_characteristic characteristic address
-			 * @return the read payload
+			 * @return the read payload or null
 			 */
 			Variant read(const String p_address, const String p_service, const String p_characteristic);
 
@@ -160,7 +160,8 @@ namespace godot {
 			 * @param p_address the peripheral address
 			 * @param p_service service address
 			 * @param p_characteristic characteristic address
-			 * @return the read payload
+			 * @param p_descriptor descriptor address
+			 * @return the read payload or null
 			 */
 			Variant read_descriptor(const String p_address, const String p_service, const String p_characteristic, const String p_descriptor);
 			
@@ -169,7 +170,8 @@ namespace godot {
 			 * @param p_address the peripheral address
 			 * @param p_service service address
 			 * @param p_characteristic characteristic address
-			 * @return true if ok
+			 * @param p_data data to write
+			 * @return true if ok or null
 			 */
 			Variant write_request(const String p_address, const String p_service, const String p_characteristic, const String p_data);
 			
@@ -178,7 +180,7 @@ namespace godot {
 			 * @param p_address the peripheral address
 			 * @param p_service service address
 			 * @param p_characteristic characteristic address
-			 * @return true if ok
+			 * @return true if ok or null
 			 */
 			Variant write_command(const String p_address, const String p_service, const String p_characteristic, const String p_data);
 			
@@ -188,7 +190,7 @@ namespace godot {
 			 * @param p_service service address
 			 * @param p_characteristic characteristic address
 			 * @param p_descriptor descriptor address
-			 * @return true if ok
+			 * @return true if ok or null
 			 */
 			Variant write_descriptor(const String p_address, const String p_service, const String p_characteristic, const String p_descriptor, const String p_data);
 			
@@ -197,7 +199,7 @@ namespace godot {
 			 * @param p_address the peripheral address
 			 * @param p_service service address
 			 * @param p_characteristic characteristic address
-			 * @return true if ok
+			 * @return true if ok or null
 			 */
 			Variant notify(const String p_address, const String p_service, const String p_characteristic);
 			
@@ -206,7 +208,7 @@ namespace godot {
 			 * @param p_address the peripheral address
 			 * @param p_service service address
 			 * @param p_characteristic characteristic address
-			 * @return true if ok
+			 * @return true if ok or null
 			 */
 			Variant indicate(const String p_address, const String p_service, const String p_characteristic);
 			
@@ -215,7 +217,7 @@ namespace godot {
 			 * @param p_address the peripheral address
 			 * @param p_service service address
 			 * @param p_characteristic characteristic address
-			 * @return true if ok
+			 * @return true if ok or null
 			 */
 			Variant unsubscribe(const String p_address, const String p_service, const String p_characteristic);
 
@@ -228,7 +230,7 @@ namespace godot {
 			 * @param p_address the peripheral address
 			 * @return true if exists
 			 */
-			Variant get_is_peripheral_exists(const String p_address);
+			bool get_is_peripheral_exists(const String p_address);
 
 			/**
 			 * Get identifier
@@ -252,7 +254,7 @@ namespace godot {
 			Variant get_is_peripheral_connectable(const String p_address);
 
 			/**
-			 * Get srvices count
+			 * Get services count
 			 * @param p_address the peripheral address
 			 * @return services count or null
 			 */

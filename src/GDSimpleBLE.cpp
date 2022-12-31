@@ -619,7 +619,6 @@ Array GDSimpleBLE::get_adapters() {
 	// Return values
 	Array l_return;
 	
-	// Get and returns scan results
 	for (auto l_adapter = m_adapters.begin(); l_adapter != m_adapters.end();) {
 		Dictionary l_data;
 
