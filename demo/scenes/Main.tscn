@@ -173,7 +173,7 @@ margin_bottom = 40.0
 rect_min_size = Vector2( 0, 40 )
 size_flags_horizontal = 3
 size_flags_vertical = 3
-text = "823A7171-DD98-45E8-C0CD-5D272E51A0AE"
+text = "6E400001-B5A3-F393-E0A9-E50E24DCCA9E"
 placeholder_text = "Peripheral"
 
 [node name="Service" type="LineEdit" parent="Controls/Connection"]
