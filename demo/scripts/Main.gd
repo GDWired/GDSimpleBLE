@@ -122,8 +122,9 @@ func _on_infos_pressed() -> void:
 		for service in peripheral.services():
 			_print_line("Service", service)
 			for caracteristic in peripheral.services()[service]:
-				_print_line("	Caracteristic", caracteristic)
-				for descriptor in peripheral.services()[service][caracteristic]:
+				var capabilities : Array = peripheral.services()[service][caracteristic]["capabilities"]
+				_print_line("	Caracteristic", caracteristic + " [" + PoolStringArray(capabilities).join(", ") + "]")
+				for descriptor in peripheral.services()[service][caracteristic]["descriptors"]:
 					_print_line("		Descriptor", descriptor)
 
 

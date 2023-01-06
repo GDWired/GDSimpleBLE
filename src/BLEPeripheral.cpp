@@ -19,7 +19,7 @@ BLEPeripheral::BLEPeripheral(SimpleBLE::Peripheral& p_peripheral, GDSimpleBLE* p
 		auto l_services = p_peripheral.services();
 		m_services_count = static_cast<int>(l_services.size());
 		m_services = BLEUtils::get_services(l_services);
-
+		
 	} else {
 		m_services_count = 0;
 		m_services = {};

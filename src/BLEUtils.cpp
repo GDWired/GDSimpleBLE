@@ -20,13 +20,20 @@ const Dictionary BLEUtils::get_services(std::vector<SimpleBLE::Service>& p_servi
 		// For each caracteristics
 		Dictionary l_characteristics;
 		for (auto& l_characteristic : l_service.characteristics()) {
+			Dictionary l_characteristic_data;
 
 			// Get descriptors
 			Array l_descriptors;
 			for (auto& l_descriptor : l_characteristic.descriptors()) {
 				l_descriptors.append(String(l_descriptor.uuid().c_str()));
 			}
-			l_characteristics[l_characteristic.uuid().c_str()] = l_descriptors;
+			Array l_capabilities;
+			for (auto& l_capabilitie : l_characteristic.capabilities()) {
+				l_capabilities.append(String(l_capabilitie.c_str()));
+			}
+			l_characteristic_data["descriptors"] = l_descriptors;
+			l_characteristic_data["capabilities"] = l_capabilities;
+			l_characteristics[l_characteristic.uuid().c_str()] = l_characteristic_data;
 
 		}
 		l_services[String(l_service.uuid().c_str())] = l_characteristics;
