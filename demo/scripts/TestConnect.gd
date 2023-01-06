@@ -9,8 +9,8 @@ var _peripherals : Array = []
 onready var _ble_utils = BLEUtils
 onready var _ble_adapter : BLEAdapter = $BLEAdapter
 onready var _terminal : Terminal = $Terminal
-onready var _connect : Button = $UI/HBoxContainer/Connect
-onready var _peripheral_index : SpinBox = $UI/HBoxContainer/PeripheralIndex
+onready var _connect : Button = $UI/Buttons/Connect
+onready var _peripheral_index : SpinBox = $UI/Buttons/PeripheralIndex
 
 
 # On ready scan for 5 seconds
