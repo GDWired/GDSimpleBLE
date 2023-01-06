@@ -230,7 +230,7 @@ namespace godot {
 			 * @param p_address the peripheral address
 			 * @return true if exists
 			 */
-			bool get_is_peripheral_exists(const String p_address);
+			Variant get_is_peripheral_exists(const String p_address);
 
 			/**
 			 * Get identifier
