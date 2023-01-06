@@ -39,18 +39,18 @@ anchor_bottom = 1.0
 margin_left = 10.0
 margin_top = -141.0
 
-[node name="Bouttons" type="HBoxContainer" parent="UI"]
+[node name="Buttons" type="HBoxContainer" parent="UI"]
 margin_right = 1270.0
 margin_bottom = 24.0
 
-[node name="PeripheralIndex" type="SpinBox" parent="UI/Bouttons"]
+[node name="PeripheralIndex" type="SpinBox" parent="UI/Buttons"]
 margin_right = 100.0
 margin_bottom = 24.0
 rect_min_size = Vector2( 100, 0 )
 max_value = 0.0
 editable = false
 
-[node name="Connect" type="Button" parent="UI/Bouttons"]
+[node name="Connect" type="Button" parent="UI/Buttons"]
 margin_left = 104.0
 margin_right = 204.0
 margin_bottom = 24.0
@@ -61,6 +61,6 @@ text = "Connect"
 [node name="BLEAdapter" type="Node" parent="."]
 script = ExtResource( 3 )
 
-[connection signal="pressed" from="UI/Bouttons/Connect" to="." method="_on_Connect_pressed"]
+[connection signal="pressed" from="UI/Buttons/Connect" to="." method="_on_Connect_pressed"]
 [connection signal="peripheral_connected" from="BLEAdapter" to="." method="_on_BLEAdapter_peripheral_connected"]
 [connection signal="peripheral_disconnected" from="BLEAdapter" to="." method="_on_BLEAdapter_peripheral_disconnected"]
