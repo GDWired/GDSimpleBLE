@@ -23,8 +23,7 @@ var _peripherals : Dictionary
 
 
 func init(address : String = "") -> void:
-	SimpleBLE.init(address)
-	
+
 	# General signals
 	SimpleBLE.connect("adapter_status_updated", self, "_on_adapter_status_updated")
 	SimpleBLE.connect("peripheral_status_updated", self, "_on_peripheral_status_updated")
@@ -40,6 +39,8 @@ func init(address : String = "") -> void:
 	# Peripheral related signals
 	SimpleBLE.connect("peripheral_notified", self, "_on_peripheral_notified")
 	SimpleBLE.connect("peripheral_indicated", self, "_on_peripheral_indicated")
+	
+	SimpleBLE.init(address)
 
 
 func start_scan() -> void:

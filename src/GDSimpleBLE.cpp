@@ -627,7 +627,7 @@ Array GDSimpleBLE::get_adapters() {
 			l_return.push_back(String(l_adapter->address().c_str()));
 			++l_adapter;
 		} catch (std::exception& l_exception) {
-			emit_adapter_status(l_exception);
+			ERR_PRINT("Error while collecting bluetooth adapters (" + String(l_exception.what()) + ")");
 		}
 	}
 
