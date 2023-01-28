@@ -6,8 +6,8 @@ Implementation of SimpleBLE (https://github.com/OpenBluetoothToolbox/SimpleBLE) 
 
 The project works on 
  - macOS : Good
- - Linux : Good but, if the scan is active, the connection/disconnection doesn't work well (and seems not completely stable, a lot of warnings)
- - Windows : Good but, many peripherals don't have a identifier
+ - Linux : Good but, if the scan is active, the connection/disconnection doesn't work well (seems not completely stable, many warnings)
+ - Windows : Good but, many peripherals don't have identifier
 
 
 Exports from Godot work for all platform except for iOS (WIP), SimpleBLE is not yet available for Android. 
