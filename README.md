@@ -4,7 +4,12 @@
 
 Implementation of SimpleBLE (https://github.com/OpenBluetoothToolbox/SimpleBLE) as a GDNative plugin for Godot 3.5 (WIP), is a part of GDWired (https://github.com/GDWired). Godot4 related work are in the branch godot4 (WIP).
 
-The project works on macOS (good), Linux (ok) and Windows (runtime exception).
+The project works on 
+ - macOS : Good
+ - Linux : Good but, if the scan is active, the connection/disconnection doesn't work well (seems not completely stable, many warnings)
+ - Windows : Good
+
+
 Exports from Godot work for all platform except for iOS (WIP), SimpleBLE is not yet available for Android. 
 
 Dependencies:
