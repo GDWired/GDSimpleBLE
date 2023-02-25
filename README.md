@@ -46,6 +46,14 @@ Third line:
  - Send: try to write in the service/characteristic.
  - Last input line: data to be sent when the "Send" button is pressed
 
+## Projects using GDSimpleBLE
+
+<b>À Bloc Attaque</b> is a cycling game that connects to, and is controlled by your smart cycling trainer. Unlike other applications focusing on the social and competitive aspects of gamified indoor training, ABA focuses on adventure, mood and solitary efforts. Set somewhere in the 1950's French countryside, your task is to literary "fight the road".
+Main menu | In game
+:-------------------------:|:-------------------------:
+<img src="https://user-images.githubusercontent.com/4105962/221378047-904f50e0-c4ed-4e91-92c1-5c01a9015f54.png" width="512"> | <img src="https://user-images.githubusercontent.com/4105962/221378123-80d43f35-c391-490a-bba1-6ec136382501.png" width="512">
+
+
 ## API
 
 **General**
